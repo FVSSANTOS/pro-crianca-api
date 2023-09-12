@@ -14,6 +14,8 @@ import com.procrianca.demo.exception.SenhaInvalidaException;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 
 @Service
 public class UsuarioServiceImpl implements UserDetailsService {
@@ -37,6 +39,11 @@ public class UsuarioServiceImpl implements UserDetailsService {
         }
         throw new SenhaInvalidaException();
     }
+
+    public List<Usuario> listAllUsers(){
+        return this.repository.findAll();
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
