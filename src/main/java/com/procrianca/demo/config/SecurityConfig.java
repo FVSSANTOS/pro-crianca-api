@@ -22,7 +22,7 @@ public class SecurityConfig {
                 auth
                     .requestMatchers(HttpMethod.POST,"/api/v1/usuarios/**")
                         .hasAnyRole("ADMIN")
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
             )
             .sessionManagement(session -> session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
