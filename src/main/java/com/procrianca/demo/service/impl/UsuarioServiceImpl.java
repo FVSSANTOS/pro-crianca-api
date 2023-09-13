@@ -1,5 +1,7 @@
 package com.procrianca.demo.service.impl;
 
+import com.procrianca.demo.domain.dtos.UserRecordDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,15 +28,23 @@ public class UsuarioServiceImpl implements UserDetailsService {
     private PasswordEncoder encoder;
 
     @Transactional
-    public Usuario salvar(Usuario usuario){
-        return repository.save(usuario);
+    public UserRecordDto salvar(Usuario user){
+        if (user == null)
+            throw new NullPointerException();
+
+        UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getSenha(), user.getCreatedAt(), user.getUpdatedAt());
+
+        BeanUtils.copyProperties(user, userRecordDto);
+        var userSaved = repository.save(user);
+
+        return userRecordDto;
     }
 
-    public UserDetails autenticar(Usuario usuario){
-        UserDetails user = loadUserByUsername(usuario.getLogin());
-        boolean senhasBatem = encoder.matches(usuario.getSenha(), user.getPassword());
+    public UserDetails autenticar(UserRecordDto userRecordDto){
+        UserDetails user = loadUserByUsername(userRecordDto.login());
+        boolean passwordMatch = encoder.matches(userRecordDto.password(), user.getPassword());
 
-        if(senhasBatem){
+        if(passwordMatch){
             return user;
         }
         throw new SenhaInvalidaException();
