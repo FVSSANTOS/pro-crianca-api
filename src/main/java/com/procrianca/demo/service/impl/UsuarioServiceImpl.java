@@ -35,7 +35,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
         UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getSenha(), user.getCreatedAt(), user.getUpdatedAt());
 
         BeanUtils.copyProperties(user, userRecordDto);
-        var userSaved = repository.save(user);
+        repository.save(user);
 
         return userRecordDto;
     }
@@ -45,6 +45,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
         boolean passwordMatch = encoder.matches(userRecordDto.password(), user.getPassword());
 
         if(passwordMatch){
+            
             return user;
         }
         throw new SenhaInvalidaException();

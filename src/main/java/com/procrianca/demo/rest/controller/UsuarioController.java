@@ -32,7 +32,7 @@ public class UsuarioController {
 
     @GetMapping("/usuarios")
     @ResponseStatus
-    public ResponseEntity<List<Usuario>> getAllProducts() {
+    public ResponseEntity<List<Usuario>> getAllUsers() {
         List<Usuario> products = this.usuarioService.listAllUsers();
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
