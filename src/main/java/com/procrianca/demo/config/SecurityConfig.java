@@ -32,11 +32,9 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth ->
                 auth
-                    .requestMatchers(HttpMethod.POST,"/api/v1/usuario")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/usuario/**")
                         .hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "api/v1/usuarios")
-                        .permitAll()
-                    .requestMatchers(HttpMethod.POST,"api/v1/auth")
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth")
                         .permitAll()
                     .anyRequest()
                     .authenticated()

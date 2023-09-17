@@ -28,16 +28,16 @@ public class UsuarioServiceImpl implements UserDetailsService {
     PasswordEncoder encoder;
 
     @Transactional
-    public UserRecordDto salvar(Usuario user){
+    public Usuario salvar(Usuario user){
         if (user == null)
             throw new NullPointerException();
 
         UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
 
         BeanUtils.copyProperties(user, userRecordDto);
-        repository.save(user);
+        
 
-        return userRecordDto;
+        return repository.save(user);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
         boolean passwordMatch = encoder.matches(usuario.getPassword(), user.getPassword());
 
         if(passwordMatch){
-            
+
             return user;
         }
         throw new SenhaInvalidaException();

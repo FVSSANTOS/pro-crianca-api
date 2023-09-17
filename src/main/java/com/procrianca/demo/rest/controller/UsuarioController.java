@@ -48,7 +48,7 @@ public class UsuarioController {
     })
     @PostMapping("/usuario")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity salvar (@RequestBody @Valid Usuario user){
+    public Usuario salvar (@RequestBody @Valid Usuario user){
 
         log.info("Calling endpoint to save a user in controller: " + log.getName());
 
@@ -57,7 +57,7 @@ public class UsuarioController {
         user.setPassword(passwordEncode);
         
         var userSaved = this.usuarioService.salvar(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userSaved);
+        return userSaved;
     }
 
 
