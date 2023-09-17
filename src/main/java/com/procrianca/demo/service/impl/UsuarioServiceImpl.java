@@ -23,16 +23,16 @@ import java.util.List;
 public class UsuarioServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UsuarioRepository repository;
+    UsuarioRepository repository;
     @Autowired
-    private PasswordEncoder encoder;
+    PasswordEncoder encoder;
 
     @Transactional
     public UserRecordDto salvar(Usuario user){
         if (user == null)
             throw new NullPointerException();
 
-        UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getSenha(), user.getCreatedAt(), user.getUpdatedAt());
+        UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
 
         BeanUtils.copyProperties(user, userRecordDto);
         repository.save(user);
@@ -40,9 +40,23 @@ public class UsuarioServiceImpl implements UserDetailsService {
         return userRecordDto;
     }
 
-    public UserDetails autenticar(UserRecordDto userRecordDto){
-        UserDetails user = loadUserByUsername(userRecordDto.login());
-        boolean passwordMatch = encoder.matches(userRecordDto.password(), user.getPassword());
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       Usuario usuario = repository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
+        
+       String[] roles = usuario.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
+
+       return User
+                .builder()
+                .username(usuario.getLogin())
+                .password(usuario.getPassword())
+                .roles(roles)
+                .build();
+    }
+
+    public UserDetails autenticar(Usuario usuario){
+        UserDetails user = loadUserByUsername(usuario.getLogin());
+        boolean passwordMatch = encoder.matches(usuario.getPassword(), user.getPassword());
 
         if(passwordMatch){
             
@@ -56,17 +70,5 @@ public class UsuarioServiceImpl implements UserDetailsService {
     }
 
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Usuario usuario = repository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
-        
-       String[] roles = usuario.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
-
-       return User
-                .builder()
-                .username(usuario.getLogin())
-                .password(usuario.getSenha())
-                .roles(roles)
-                .build();
-    }
+    
 }

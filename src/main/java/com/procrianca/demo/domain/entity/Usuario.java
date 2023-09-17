@@ -43,7 +43,7 @@ public class Usuario {
     @NotNull
     @NotBlank
     @Length(min = 8, max = 255)
-    private String senha;
+    private String password;
 
     @Column
     private boolean admin;
