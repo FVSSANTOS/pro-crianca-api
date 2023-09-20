@@ -1,6 +1,6 @@
 package com.procrianca.demo.config;
 
-import com.procrianca.demo.domain.entity.Usuario;
+import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,10 +22,10 @@ public class InicializerData implements CommandLineRunner {
     @Override
     public void run(String... args) {
         LocalDateTime now = LocalDateTime.now();
-        Usuario usuario = new Usuario(1, "gabs1234@email.com", "12345678", true, now, now);
-        String passwordEncode = passwordEncoder.encode(usuario.getPassword());
+        User user = new User(1, "administrator@email.com", "12345678", true, now, now);
+        String passwordEncode = passwordEncoder.encode(user.getPassword());
 
-        usuario.setPassword(passwordEncode);
-        usuarioRepository.save(usuario);
+        user.setPassword(passwordEncode);
+        usuarioRepository.save(user);
     }
 }
