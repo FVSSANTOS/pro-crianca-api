@@ -1,10 +1,16 @@
 package com.procrianca.demo.domain.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-public record CredenciaisDTO(
-    @NotBlank String login,
-    @NotBlank String password 
-) {
-    
+@AllArgsConstructor
+@Getter
+@Setter
+public class CredenciaisDTO {
+    @NotBlank
+    private String login;
+    @NotBlank
+    private String password;
 }
