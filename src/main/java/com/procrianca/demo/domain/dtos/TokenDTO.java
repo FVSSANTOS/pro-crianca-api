@@ -1,8 +1,18 @@
 package com.procrianca.demo.domain.dtos;
 
-public record TokenDTO(
-    String login,
-    String token
-) {
+import com.procrianca.demo.domain.response.AuthResponse;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class  TokenDTO extends AuthResponse {
+
+    private String token;
+
+    public TokenDTO(String token, String message, int httpStatusCode) {
+        super(message, httpStatusCode);
+        this.token = token;
+    }
     
 }
