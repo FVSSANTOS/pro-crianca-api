@@ -8,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CredenciaisDTO {
+public class CredentialsDTO {
     @NotBlank
     private String login;
     @NotBlank

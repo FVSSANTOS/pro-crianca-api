@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.procrianca.demo.domain.entity.User;
-import com.procrianca.demo.domain.repository.UsuarioRepository;
+import com.procrianca.demo.domain.repository.UserRepository;
 import com.procrianca.demo.exception.passwordInvalidException;
 
 import jakarta.transaction.Transactional;
@@ -19,10 +19,10 @@ import java.util.List;
 
 
 @Service
-public class UsuarioServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
     @Autowired
-    UsuarioRepository repository;
+    UserRepository repository;
     @Autowired
     PasswordEncoder encoder;
 
@@ -56,14 +56,14 @@ public class UsuarioServiceImpl implements UserDetailsService {
     public UserDetails authenticate(User userInput) {
         UserDetails user = loadUserByUsername(userInput.getLogin());
 
-        if (incorrectPassword(userInput.getPassword(), user.getPassword())) {
+        if (correctPassword(userInput.getPassword(), user.getPassword())) {
             return user;
         }
 
         throw new passwordInvalidException();
     }
 
-    private boolean incorrectPassword(String inputPassword, String storedPassword) {
+    private boolean correctPassword(String inputPassword, String storedPassword) {
         return encoder.matches(inputPassword, storedPassword);
     }
 

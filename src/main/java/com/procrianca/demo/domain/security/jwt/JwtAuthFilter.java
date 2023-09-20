@@ -9,7 +9,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.procrianca.demo.service.impl.UsuarioServiceImpl;
+import com.procrianca.demo.service.impl.UserServiceImpl;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -19,9 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthFilter extends OncePerRequestFilter{
 
     private JwtService jwtService;
-    private UsuarioServiceImpl usuarioService;
+    private UserServiceImpl usuarioService;
 
-    public JwtAuthFilter(JwtService jwtService,UsuarioServiceImpl usuarioService){
+    public JwtAuthFilter(JwtService jwtService,UserServiceImpl usuarioService){
         this.jwtService = jwtService;
         this.usuarioService = usuarioService;
     }

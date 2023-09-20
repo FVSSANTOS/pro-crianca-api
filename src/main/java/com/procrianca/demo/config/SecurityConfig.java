@@ -15,14 +15,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.procrianca.demo.domain.security.jwt.JwtAuthFilter;
 import com.procrianca.demo.domain.security.jwt.JwtService;
-import com.procrianca.demo.service.impl.UsuarioServiceImpl;
+import com.procrianca.demo.service.impl.UserServiceImpl;
 
 
 @Configuration
 public class SecurityConfig {
     
     @Autowired
-    private UsuarioServiceImpl usuarioService;
+    private UserServiceImpl usuarioService;
     @Autowired
     private JwtService jwtService;
 
@@ -36,6 +36,8 @@ public class SecurityConfig {
                         .hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth")
                         .permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/v1/beneficiary/**")
+                        .hasAnyRole("ADMIN","USER")
                     .anyRequest()
                     .authenticated()
             )

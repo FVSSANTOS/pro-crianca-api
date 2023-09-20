@@ -31,21 +31,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(name = "login")
     @NotEmpty(message = "{Campo login é obrigratório}")
-    @NotNull
     @NotBlank
     @Length(min = 8, max = 255)
     private String login;
 
-    @Column
+    @Column(name = "password")
     @NotEmpty(message = "{Campo senha é obrigratório}")
-    @NotNull
     @NotBlank
     @Length(min = 8, max = 255)
     private String password;
 
-    @Column
+    @Column(name = "admin")
     private boolean admin;
 
     @NotNull

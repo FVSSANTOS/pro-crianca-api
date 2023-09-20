@@ -1,7 +1,7 @@
 package com.procrianca.demo.rest.controller;
 
 
-import com.procrianca.demo.domain.dtos.CredenciaisDTO;
+import com.procrianca.demo.domain.dtos.CredentialsDTO;
 import com.procrianca.demo.domain.dtos.TokenDTO;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.security.jwt.JwtService;
-import com.procrianca.demo.service.impl.UsuarioServiceImpl;
+import com.procrianca.demo.service.impl.UserServiceImpl;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ import java.util.List;
 @Tag(name = "Users API", description = "API for user management")
 public class UsuarioController {
     
-    private final UsuarioServiceImpl userService;
+    private final UserServiceImpl userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
@@ -69,7 +69,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody CredenciaisDTO credenciais) {
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody CredentialsDTO credenciais) {
         log.info("Calling endpoint to authenticate a users in controller: " + log.getName());
 
         try {
@@ -80,20 +80,18 @@ public class UsuarioController {
 
             UserDetails authenticated = userService.authenticate(user);
 
-            if (incorrectPassword(user.getPassword(), authenticated.getPassword())) {
+            if (correctPassword(user.getPassword(), authenticated.getPassword())) {
                 String token = jwtService.gerarToken(user);
-                System.out.println(token);
                 return ResponseEntity.ok(new TokenDTO(token, "Logado com sucesso.", HttpStatusCode.OK.getValue()));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse("Login ou senha incorreta.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
             }
         } catch (UsernameNotFoundException e) {
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Usuário não encontrado.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
         }
     }
 
-    private boolean incorrectPassword(String senhaDigitada, String senhaArmazenada) {
+    private boolean correctPassword(String senhaDigitada, String senhaArmazenada) {
         return passwordEncoder.matches(senhaDigitada, senhaArmazenada);
     }
 
