@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Usuario {
+public class User {
 
     private static final long serialVersionUID = 1L;
 
