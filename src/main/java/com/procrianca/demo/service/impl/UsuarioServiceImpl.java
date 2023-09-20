@@ -3,16 +3,15 @@ package com.procrianca.demo.service.impl;
 import com.procrianca.demo.domain.dtos.UserRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.procrianca.demo.domain.entity.Usuario;
+import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.repository.UsuarioRepository;
-import com.procrianca.demo.exception.SenhaInvalidaException;
+import com.procrianca.demo.exception.passwordInvalidException;
 
 import jakarta.transaction.Transactional;
 
@@ -28,7 +27,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
     PasswordEncoder encoder;
 
     @Transactional
-    public Usuario salvar(Usuario user){
+    public User saveUser(User user){
         if (user == null)
             throw new NullPointerException();
 
@@ -42,30 +41,33 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Usuario usuario = repository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
+       User user = repository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
         
-       String[] roles = usuario.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
+       String[] roles = user.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
 
-       return User
+       return org.springframework.security.core.userdetails.User
                 .builder()
-                .username(usuario.getLogin())
-                .password(usuario.getPassword())
+                .username(user.getLogin())
+                .password(user.getPassword())
                 .roles(roles)
                 .build();
     }
 
-    public UserDetails autenticar(Usuario usuario){
-        UserDetails user = loadUserByUsername(usuario.getLogin());
-        boolean passwordMatch = encoder.matches(usuario.getPassword(), user.getPassword());
+    public UserDetails authenticate(User userInput) {
+        UserDetails user = loadUserByUsername(userInput.getLogin());
 
-        if(passwordMatch){
-
+        if (incorrectPassword(userInput.getPassword(), user.getPassword())) {
             return user;
         }
-        throw new SenhaInvalidaException();
+
+        throw new passwordInvalidException();
     }
 
-    public List<Usuario> listAllUsers(){
+    private boolean incorrectPassword(String inputPassword, String storedPassword) {
+        return encoder.matches(inputPassword, storedPassword);
+    }
+
+    public List<User> listAllUsers(){
         return this.repository.findAll();
     }
 

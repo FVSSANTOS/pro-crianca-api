@@ -1,7 +1,7 @@
 package com.procrianca.demo.exception;
 
-public class SenhaInvalidaException  extends RuntimeException{
-    public SenhaInvalidaException(){
+public class passwordInvalidException extends RuntimeException{
+    public passwordInvalidException(){
         super("Senha inválida");
     }
 }
