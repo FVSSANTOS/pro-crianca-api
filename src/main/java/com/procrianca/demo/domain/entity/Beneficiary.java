@@ -8,15 +8,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "beneficiarios")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Beneficiary {
     
@@ -24,22 +25,21 @@ public class Beneficiary {
     @Id
     private Integer id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
-    @Column(name = "responsibleName")
+    @Column
     private String responsibleName;
-    
-    @Column(name = "situation")
+   
+    @Column
     private String situation;
 
-    @Column(name = "age")
+    @Column
     private Integer age;
 
-    @Column(name = "gender")
+   @Column  
     private String gender;
 
-    @Column(name = "cpf")
-    @CPF
+    @Column
     private String cpf;
 }
