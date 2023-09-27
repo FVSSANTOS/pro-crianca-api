@@ -8,6 +8,8 @@ import com.procrianca.demo.domain.repository.BeneficiaryRespository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 public class BeneficaryService {
 
@@ -20,5 +22,9 @@ public class BeneficaryService {
             throw new NullPointerException();
         
         return respository.save(beneficiary);
+    }
+
+    public List<Beneficiary> listAllBeneficiaries(){
+        return respository.findAll();
     }
 }

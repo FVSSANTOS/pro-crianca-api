@@ -44,7 +44,7 @@ public class UsuarioController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class)))
     })
-    @PostMapping("/usuario")
+    @PostMapping("/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user){
 
