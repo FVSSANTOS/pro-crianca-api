@@ -1,6 +1,5 @@
 package com.procrianca.demo.rest.controller;
 
-import com.procrianca.demo.domain.dtos.TokenDTO;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import com.procrianca.demo.domain.entity.Beneficiary;
-import com.procrianca.demo.service.impl.BeneficaryService;
+import com.procrianca.demo.service.impl.BeneficiaryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,10 +27,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 @Slf4j
 @RequiredArgsConstructor
-@Tag(name = "Beneficiarys API", description = "API for beneficiary management")
+@Tag(name = "Beneficiaries API", description = "API for beneficiary management")
 public class BeneficiaryController {
     
-    private final BeneficaryService beneficiaryService;
+    private final BeneficiaryService beneficiaryService;
 
     @Operation(summary = "Create a new beneficary")
     @ApiResponses(value = {
@@ -75,7 +74,7 @@ public class BeneficiaryController {
     })
         @DeleteMapping("/beneficiaries/{id}")
     public ResponseEntity<AuthResponse> deleteBeneficiary(@PathVariable(value = "id") @NotNull @Positive Integer id) {
-        log.info("Calling endpoint to delete one product in controller: " + log.getName());
+        log.info("Calling endpoint to delete one beneficiary in controller: " + log.getName());
         var beneficiary = this.beneficiaryService.deleteBeneficiary(id);
         if (!beneficiary) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Beneficiário não encontrado. Não foi possivel exlcuir.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
@@ -85,7 +84,7 @@ public class BeneficiaryController {
     @GetMapping("/beneficiaries")
     @ResponseStatus
     public ResponseEntity<List<Beneficiary>> getAllBeneficiaries() {
-        log.info("Calling endpoint to list all users in controller: " + log.getName());
+        log.info("Calling endpoint to list all beneficiaries in controller: " + log.getName());
 
         List<Beneficiary> beneficiaries = this.beneficiaryService.listAllBeneficiaries();
         return ResponseEntity.status(HttpStatus.OK).body(beneficiaries);

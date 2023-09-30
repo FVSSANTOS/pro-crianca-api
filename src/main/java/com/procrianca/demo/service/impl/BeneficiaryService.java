@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class BeneficaryService {
+public class BeneficiaryService {
 
     @Autowired
     private BeneficiaryRespository repository;
