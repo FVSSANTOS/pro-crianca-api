@@ -44,7 +44,7 @@ public class UsuarioController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class)))
     })
-    @PostMapping("/usuarios")
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user){
 
@@ -59,12 +59,17 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Retrieve all users")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Listed Users"),
+        @ApiResponse(responseCode = "404", description = "Users not found")
+    })
     @GetMapping("/usuarios")
-    @ResponseStatus
     public ResponseEntity<List<User>> getAllUsers() {
         log.info("Calling endpoint to list all users in controller: " + log.getName());
-
         List<User> users = this.userService.listAllUsers();
+        if(users.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Não existe nenhum usuário.", HttpStatusCode.NOT_FOUND.getValue()));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
@@ -72,7 +77,6 @@ public class UsuarioController {
     @PostMapping("/auth")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody CredentialsDTO credenciais) {
         log.info("Calling endpoint to authenticate a users in controller: " + log.getName());
-
         try {
             User user = User.builder()
                     .login(credenciais.getLogin())

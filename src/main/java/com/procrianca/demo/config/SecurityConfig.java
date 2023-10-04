@@ -32,12 +32,12 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth ->
                 auth
-                    .requestMatchers(HttpMethod.POST,"/api/v1/usuarios/**")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/user")
                         .hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/v1/beneficiaries/**")
-                    .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/beneficiary")
+                        .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.GET,"/api/v1/beneficiaries/**")
-                    .hasAnyRole("ADMIN","USER")
+                    .   hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth")
                         .permitAll()
                     .requestMatchers(HttpMethod.GET, "/v3/api-docs/**")
@@ -45,7 +45,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/swagger-ui/**")
                         .permitAll()
                     .anyRequest()
-                    .authenticated()
+                        .authenticated()
             )
             .sessionManagement(session -> session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

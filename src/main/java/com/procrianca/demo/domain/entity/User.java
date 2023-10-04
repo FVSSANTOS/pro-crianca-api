@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.procrianca.demo.domain.entity.Collaborator;
+
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
@@ -28,7 +30,7 @@ public class User {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "collaborator_id")
     private Integer id;
 
     @Column(name = "login")
@@ -45,6 +47,11 @@ public class User {
 
     @Column(name = "admin")
     private boolean admin;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "collaborator_id")
+    private Collaborator user;
 
     @NotNull
     LocalDateTime createdAt;

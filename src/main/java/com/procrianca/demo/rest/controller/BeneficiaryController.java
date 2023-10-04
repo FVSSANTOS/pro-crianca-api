@@ -38,7 +38,7 @@ public class BeneficiaryController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Beneficiary.class)))
     })
-    @PostMapping("/beneficiaries")
+    @PostMapping("/beneficiary")
     @ResponseStatus(HttpStatus.CREATED)
     public Beneficiary saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary){
         log.info("Calling endpoint to save a beneficiary in controller: " + log.getName());
@@ -77,18 +77,23 @@ public class BeneficiaryController {
         log.info("Calling endpoint to delete one beneficiary in controller: " + log.getName());
         var beneficiary = this.beneficiaryService.deleteBeneficiary(id);
         if (!beneficiary) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Beneficiário não encontrado. Não foi possivel exlcuir.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Beneficiário não encontrado. Não foi possivel exlcuir.", HttpStatusCode.NOT_FOUND.getValue()) {});
         }
         return ResponseEntity.ok(new AuthResponse("Beneficiário excluído com sucesso", HttpStatusCode.OK.getValue()));
     }
 
     @Operation(summary = "Retrieve all beneficiaries")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Listed Beneficiaries"),
+        @ApiResponse(responseCode = "404", description = "Beneficiaries not found")
+    })
     @GetMapping("/beneficiaries")
-    @ResponseStatus
     public ResponseEntity<List<Beneficiary>> getAllBeneficiaries() {
         log.info("Calling endpoint to list all beneficiaries in controller: " + log.getName());
-
         List<Beneficiary> beneficiaries = this.beneficiaryService.listAllBeneficiaries();
+        if(beneficiaries.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Não existe nenhum beneficiário.", HttpStatusCode.NOT_FOUND.getValue()));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(beneficiaries);
     }
 
