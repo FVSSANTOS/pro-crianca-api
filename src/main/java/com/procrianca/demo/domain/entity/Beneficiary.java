@@ -1,5 +1,6 @@
 package com.procrianca.demo.domain.entity;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.Column;

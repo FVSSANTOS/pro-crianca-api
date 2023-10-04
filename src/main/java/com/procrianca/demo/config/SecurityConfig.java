@@ -20,7 +20,7 @@ import com.procrianca.demo.service.impl.UserServiceImpl;
 
 @Configuration
 public class SecurityConfig {
-    
+
     @Autowired
     private UserServiceImpl usuarioService;
     @Autowired
@@ -32,12 +32,18 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth ->
                 auth
-                    .requestMatchers(HttpMethod.POST,"/api/v1/usuario/**")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/usuarios/**")
                         .hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/beneficiaries/**")
+                    .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.GET,"/api/v1/beneficiaries/**")
+                    .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth")
                         .permitAll()
-                    .requestMatchers(HttpMethod.POST,"/api/v1/beneficiary/**")
-                        .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.GET, "/v3/api-docs/**")
+                        .permitAll()
+                    .requestMatchers(HttpMethod.GET, "/swagger-ui/**")
+                        .permitAll()
                     .anyRequest()
                     .authenticated()
             )

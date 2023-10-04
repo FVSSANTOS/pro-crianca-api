@@ -1,7 +1,11 @@
 package com.procrianca.demo.domain.security.jwt;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Slf4j
 public class JwtAuthFilter extends OncePerRequestFilter{
 
     private JwtService jwtService;
@@ -29,7 +34,9 @@ public class JwtAuthFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
+
+        log.info("filtering request to check if it has a valid token");
+
         String  authorization =  request.getHeader("Authorization");
 
         if(authorization != null && authorization.startsWith("Bearer")){
@@ -49,5 +56,5 @@ public class JwtAuthFilter extends OncePerRequestFilter{
         filterChain.doFilter(request, response);
       
     }
-    
+
 }

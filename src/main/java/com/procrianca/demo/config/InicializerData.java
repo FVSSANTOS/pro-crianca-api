@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 //classe implementada para cadastrar usuário inicial(serve para a fase de testes)
 @Component
+
 public class InicializerData implements CommandLineRunner {
 
     private final UserRepository usuarioRepository;
