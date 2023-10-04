@@ -81,6 +81,8 @@ public class BeneficiaryController {
         }
         return ResponseEntity.ok(new AuthResponse("Beneficiário excluído com sucesso", HttpStatusCode.OK.getValue()));
     }
+
+    @Operation(summary = "Retrieve all beneficiaries")
     @GetMapping("/beneficiaries")
     @ResponseStatus
     public ResponseEntity<List<Beneficiary>> getAllBeneficiaries() {

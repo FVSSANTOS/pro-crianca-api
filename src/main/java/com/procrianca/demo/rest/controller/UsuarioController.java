@@ -58,7 +58,7 @@ public class UsuarioController {
         return userSaved;
     }
 
-
+    @Operation(summary = "Retrieve all users")
     @GetMapping("/usuarios")
     @ResponseStatus
     public ResponseEntity<List<User>> getAllUsers() {
@@ -68,6 +68,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
+    @Operation(summary = "Authenticate user")
     @PostMapping("/auth")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody CredentialsDTO credenciais) {
         log.info("Calling endpoint to authenticate a users in controller: " + log.getName());
