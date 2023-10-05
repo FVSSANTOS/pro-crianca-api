@@ -55,4 +55,7 @@ A nossa API inclui os seguintes endpoints para operações de CRUD (Criar, Ler, 
 - [Flávio Vinicius](https://github.com/FVSSANTOS/) - [Perfil no LinkedIn](https://www.linkedin.com/in/flavio-vinicius-programador/)
 - [Giovanni Aguiar]() - [Perfil no LinkedIn](https://www.linkedin.com/in/giovanni-de-aguiar/)
 - [Maria do Carmo](https://github.com/Madu-dev) - [Perfil no LinkedIn](https://www.linkedin.com/in/mariadocarmoalcantara/)
+- [Luís Eduardo](https://github.com/LEDHU) - [Perfil no LinkedIn](https://www.linkedin.com/in/edupeixot0/)
+- [Arthur Franco](https://github.com/ArthurF36) - [Perfil no LinkedIn](https://www.linkedin.com/in/arthur-franco-956031278/)
+- [João Gabriel](https://github.com/Gabrielabsalao24) - [Perfil no LinkedIn]()
 
