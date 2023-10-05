@@ -92,7 +92,7 @@ public class BeneficiaryController {
         log.info("Calling endpoint to list all beneficiaries in controller: " + log.getName());
         List<Beneficiary> beneficiaries = this.beneficiaryService.listAllBeneficiaries();
         if(beneficiaries.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Não existe nenhum beneficiário.", HttpStatusCode.NOT_FOUND.getValue()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body((List<Beneficiary>) new AuthResponse("Não existe nenhum beneficiário.", HttpStatusCode.NOT_FOUND.getValue()));
         }
         return ResponseEntity.status(HttpStatus.OK).body(beneficiaries);
     }

@@ -1,18 +1,12 @@
 package com.procrianca.demo.domain.entity;
 
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "beneficiarios")
@@ -44,4 +38,8 @@ public class Beneficiary {
     @Column
     @CPF
     private String cpf;
+
+    @ManyToOne
+    @JoinColumn(name = "units_id")
+    private Unit units;
 }

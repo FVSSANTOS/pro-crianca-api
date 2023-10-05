@@ -1,18 +1,11 @@
-package main.java.com.procrianca.demo.domain.entity;
+package com.procrianca.demo.domain.entity;
 
-import com.procrianca.demo.domain.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 
 @Entity
@@ -33,9 +26,13 @@ public class Collaborator {
 
     @Column
     @CPF
-    private Sting cpf;
+    private String cpf;
 
     @OneToOne(mappedBy = "collaborator", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "units_id")
+    private Unit units;
 }

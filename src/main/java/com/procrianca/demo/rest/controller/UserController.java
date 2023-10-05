@@ -32,7 +32,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "Users API", description = "API for user management")
-public class UsuarioController {
+public class UserController {
     
     private final UserServiceImpl userService;
     private final PasswordEncoder passwordEncoder;
@@ -68,7 +68,7 @@ public class UsuarioController {
         log.info("Calling endpoint to list all users in controller: " + log.getName());
         List<User> users = this.userService.listAllUsers();
         if(users.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Não existe nenhum usuário.", HttpStatusCode.NOT_FOUND.getValue()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body((List<User>) new AuthResponse("Não existe nenhum usuário.", HttpStatusCode.NOT_FOUND.getValue()));
         }
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
