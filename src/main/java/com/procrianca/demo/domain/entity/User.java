@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,8 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import main.java.com.procrianca.demo.domain.entity.Collaborator;
-
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
@@ -30,7 +31,7 @@ public class User {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "collaborator_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "login")
@@ -49,9 +50,8 @@ public class User {
     private boolean admin;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "collaborator_id")
-    private Collaborator user;
+    @JoinColumn(name = "colaboradores_id")
+    private Collaborator collaborator;
 
     @NotNull
     LocalDateTime createdAt;

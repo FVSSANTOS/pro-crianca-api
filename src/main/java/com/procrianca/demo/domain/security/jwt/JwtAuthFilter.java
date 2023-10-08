@@ -1,15 +1,11 @@
 package com.procrianca.demo.domain.security.jwt;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,9 +20,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthFilter extends OncePerRequestFilter{
 
     private JwtService jwtService;
+  
     private UserServiceImpl usuarioService;
 
-    public JwtAuthFilter(JwtService jwtService,UserServiceImpl usuarioService){
+    public JwtAuthFilter(JwtService jwtService, UserServiceImpl usuarioService) {
         this.jwtService = jwtService;
         this.usuarioService = usuarioService;
     }

@@ -3,6 +3,7 @@ package com.procrianca.demo.service.impl;
 import com.procrianca.demo.domain.dtos.UserRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,9 +23,9 @@ import java.util.List;
 public class UserServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     @Transactional
     public User saveUser(User user){
