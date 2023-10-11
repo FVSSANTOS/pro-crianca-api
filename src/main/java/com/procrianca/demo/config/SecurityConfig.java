@@ -3,8 +3,11 @@ package com.procrianca.demo.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.procrianca.demo.domain.security.jwt.JwtAuthFilter;
 import com.procrianca.demo.domain.security.jwt.JwtService;
 import com.procrianca.demo.service.impl.UserServiceImpl;
+
 
 
 @Configuration
@@ -32,7 +36,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth ->
                 auth
                     .requestMatchers(HttpMethod.POST,"/api/v1/user")
-                        .hasRole("ADMIN")
+                        .permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/v1/beneficiary")
                         .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.GET,"/api/v1/beneficiaries/**")

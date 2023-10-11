@@ -36,8 +36,10 @@ import java.util.List;
 @Tag(name = "Users API", description = "API for user management")
 public class UserController {
     
-    private final UserServiceImpl userService;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private  UserServiceImpl userService;
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
     @Autowired
     private  JwtService jwtService;
 

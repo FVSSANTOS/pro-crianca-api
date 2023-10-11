@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({ "com.procrianca.demo.security.jwt" })
 public class DemoApplication {
 
 	public static void main(String[] args) {
