@@ -1,14 +1,6 @@
 package com.procrianca.demo.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -49,8 +41,8 @@ public class User {
     @Column(name = "admin")
     private boolean admin;
 
-    @OneToOne
-    @JoinColumn(name = "colaboradores_id")
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "colaboradores_id", referencedColumnName = "id")
     private Collaborator collaborator;
 
     @NotNull
@@ -59,4 +51,12 @@ public class User {
     @NotNull
     LocalDateTime updatedAt;
 
+    public User(String mail, String number, boolean b, Object o, LocalDateTime now, LocalDateTime now1) {
+        this.login = mail;
+        this.password = number;
+        this.admin = b;
+        this.collaborator = (Collaborator) o;
+        this.createdAt = now;
+        this.updatedAt = now1;
+    }
 }

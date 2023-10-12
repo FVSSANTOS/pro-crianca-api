@@ -24,6 +24,7 @@ import com.procrianca.demo.domain.entity.Collaborator;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class CollaboratorController {
 
     private final CollaboratorService collaboratorService;
 
-    @PostMapping("/collaborator")
+    @PostMapping("/collaborators")
     @ResponseStatus(HttpStatus.CREATED)
     public Collaborator saveCollaborator(@RequestBody @Valid Collaborator collaborator){
         log.info("Calling endpoint to save a collaborator in controller: " + log.getName());
@@ -49,7 +50,7 @@ public class CollaboratorController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Beneficiary.class)))
     })
-    @PutMapping("/collaborator/{id}")
+    @PutMapping("/collaborators/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AuthResponse> updateCollaborator(@PathVariable(value = "id") @NotNull @Positive Integer id,
                                                           @RequestBody @Valid Collaborator collaborator){
@@ -67,7 +68,7 @@ public class CollaboratorController {
             @ApiResponse(responseCode = "200", description = "Collaborator deleted"),
             @ApiResponse(responseCode = "404", description = "Collaborator not found")
     })
-    @DeleteMapping("/collaborator/{id}")
+    @DeleteMapping("/collaborators/{id}")
     public ResponseEntity<AuthResponse> deleteCollaborator(@PathVariable(value = "id") @NotNull @Positive Integer id) {
         log.info("Calling endpoint to delete one collaborator in controller: " + log.getName());
         var collaborator = this.collaboratorService.deleteCollaborator(id);

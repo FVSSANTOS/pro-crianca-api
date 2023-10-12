@@ -30,6 +30,7 @@ import com.procrianca.demo.service.impl.UserServiceImpl;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 @Slf4j
 @RequiredArgsConstructor
@@ -49,7 +50,7 @@ public class UserController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class)))
     })
-    @PostMapping("/user")
+    @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user){
 
@@ -68,7 +69,7 @@ public class UserController {
         @ApiResponse(responseCode = "200", description = "Listed Users"),
         @ApiResponse(responseCode = "404", description = "Users not found")
     })
-    @GetMapping("/usuarios")
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         log.info("Calling endpoint to list all users in controller: " + log.getName());
         List<User> users = this.userService.listAllUsers();

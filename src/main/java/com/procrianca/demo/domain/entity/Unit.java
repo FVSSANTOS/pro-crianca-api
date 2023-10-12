@@ -38,4 +38,12 @@ public class Unit {
     @JsonIgnore
     @OneToMany(mappedBy = "units", fetch = FetchType.LAZY)
     private Set<Beneficiary> beneficiaries;
+
+    public Unit(String name, String street, String number, Object collaborators, Object beneficiaries) {
+        this.name = name;
+        this.street = street;
+        this.number = number;
+        this.collaborators = (Set<Collaborator>) collaborators;
+        this.beneficiaries = (Set<Beneficiary>) beneficiaries;
+    }
 }

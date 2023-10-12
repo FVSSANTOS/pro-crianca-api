@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 @Slf4j
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ public class BeneficiaryController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Beneficiary.class)))
     })
-    @PostMapping("/beneficiary")
+    @PostMapping("/beneficiaries")
     @ResponseStatus(HttpStatus.CREATED)
     public Beneficiary saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary){
         log.info("Calling endpoint to save a beneficiary in controller: " + log.getName());

@@ -28,11 +28,17 @@ public class Collaborator {
     @CPF
     private String cpf;
 
-    @OneToOne(mappedBy = "collaborator", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "collaborator")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "units_id")
     private Unit units;
+
+    public Collaborator(String collaborator, String number, User user, Unit unit) {
+        this.name = collaborator;
+        this.cpf = number;
+        this.user = user;
+        this.units = unit;
+    }
 }
