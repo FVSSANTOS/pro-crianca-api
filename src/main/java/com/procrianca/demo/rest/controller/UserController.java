@@ -52,16 +52,18 @@ public class UserController {
     })
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody @Valid User user){
+    public ResponseEntity<AuthResponse> saveUser(@RequestBody @Valid User user){
 
         log.info("Calling endpoint to save a user in controller: " + log.getName());
 
         String passwordEncode = passwordEncoder.encode(user.getPassword());
-
         user.setPassword(passwordEncode);
         
         var userSaved = this.userService.saveUser(user);
-        return userSaved;
+        if (userSaved == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse("Usuário já cadastrado na base de dados.", HttpStatusCode.BAD_REQUEST.getValue()) {});
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse("Usuário criado com sucesso.", HttpStatusCode.CREATED.getValue()) {});
     }
 
     @Operation(summary = "Retrieve all users")

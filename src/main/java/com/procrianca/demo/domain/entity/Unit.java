@@ -32,11 +32,11 @@ public class Unit {
     private String number;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "units", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY)
     private Set<Collaborator> collaborators;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "units", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY)
     private Set<Beneficiary> beneficiaries;
 
     public Unit(String name, String street, String number, Object collaborators, Object beneficiaries) {

@@ -29,15 +29,16 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Transactional
     public User saveUser(User user){
-        if (user == null)
-            throw new NullPointerException();
+        var userExists = this.repository.findByLogin(user.getLogin());
 
-        UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
+        if (userExists.isPresent() || user == null || user.getLogin() == null || user.getLogin() == "") {
+            return null;
+        } else {
+            UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
+            BeanUtils.copyProperties(user, userRecordDto);
+            return repository.save(user);
+        }
 
-        BeanUtils.copyProperties(user, userRecordDto);
-        
-
-        return repository.save(user);
     }
 
     @Override

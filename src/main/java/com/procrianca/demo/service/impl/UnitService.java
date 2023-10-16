@@ -49,4 +49,8 @@ public class UnitService {
         this.repository.delete(unit.get());
         return true;
     }
+
+    public Unit findUnitById(Integer id) {
+        return repository.findUnitById(id);
+    }
 }

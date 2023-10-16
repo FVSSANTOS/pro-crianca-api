@@ -11,8 +11,12 @@
 
 ## Documentação API: CRUD e Login de Usuários
 
-A nossa API inclui os seguintes endpoints para operações de CRUD (Criar, Ler, Atualizar, Excluir) e login de usuários:
+**[!OBS] >>Arquivo de configuração e permissão de rotas: SecurityConfig.java** 
 
+A nossa API inclui os seguintes endpoints para operações de CRUD (Criar, Ler, Atualizar, Excluir) e login de Usuários,
+Beneficiários e Colaboradores.
+
+## Usuários:
 ### 1. Criar um novo usuário
 
 - Método: POST
@@ -48,6 +52,31 @@ A nossa API inclui os seguintes endpoints para operações de CRUD (Criar, Ler, 
 - Rota: /usuarios/{id}
 - Parâmetros da Requisição: ID do usuário
 - Descrição: Exclui um usuário existente com base no ID fornecido.
+
+## Beneficiários:
+### 1. Criação de um Beneficiário:
+- Exemplo
+
+  - Método: POST 
+  - Rota: /beneficiarios 
+```json
+{
+  "id": 1,
+  "name": "José Vicente",
+  "responsibleName": "Joana das Dores",
+  "situation": "Não possui certidão de nascimento.",
+  "age": 9,
+  "gender": "F",
+  "cpf": "90572765002",
+  "collaborator": {
+  "id": 1
+  },
+  "unit": {
+  "id": 1
+  }
+}
+```
+
 
 - ## Autores
 
