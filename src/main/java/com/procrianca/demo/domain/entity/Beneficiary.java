@@ -32,7 +32,7 @@ public class Beneficiary {
     @Column
     private Integer age;
 
-   @Column  
+    @Column  
     private String gender;
 
     @Column
