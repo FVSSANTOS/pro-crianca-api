@@ -43,8 +43,13 @@ public class UserServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        User user = repository.findByLogin(username).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
-        
-       String[] roles = user.isAdmin() ? new String[] {"ADMIN","USER"} : new String[] {"USER"};
+        String[] roles;
+       if(user.getAdmin() == 1){
+         roles = new String[] {"ADMIN","USER"};
+       }else{
+        roles = new String[] {"USER"};
+       }
+       
 
        return org.springframework.security.core.userdetails.User
                 .builder()

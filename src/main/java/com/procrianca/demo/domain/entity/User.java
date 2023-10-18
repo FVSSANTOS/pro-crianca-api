@@ -39,7 +39,7 @@ public class User {
     private String password;
 
     @Column(name = "admin")
-    private boolean admin;
+    private int admin;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "colaboradores_id", referencedColumnName = "id")
@@ -51,7 +51,7 @@ public class User {
     @NotNull
     LocalDateTime updatedAt;
 
-    public User(String mail, String number, boolean b, Object o, LocalDateTime now, LocalDateTime now1) {
+    public User(String mail, String number, int b, Object o, LocalDateTime now, LocalDateTime now1) {
         this.login = mail;
         this.password = number;
         this.admin = b;

@@ -51,6 +51,7 @@ public class UserController {
                             schema = @Schema(implementation = User.class)))
     })
     @PostMapping("/users")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Valid User user){
 
