@@ -8,11 +8,11 @@ import lombok.Setter;
 public class AuthResponse {
 
     private String message;
-    private int stauts;
+    private int status;
 
-    public AuthResponse(String message, int stauts) {
+    public AuthResponse(String message, int status) {
         this.message = message;
-        this.stauts = stauts;
+        this.status = status;
     }
 
 

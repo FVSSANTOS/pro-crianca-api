@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "colaboradores")
@@ -32,13 +34,17 @@ public class Collaborator {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "units_id")
-    private Unit units;
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
 
-    public Collaborator(String collaborator, String number, User user, Unit unit) {
+    @OneToMany(mappedBy = "collaborator")
+    private List<Beneficiary> beneficiarios;
+
+    public Collaborator(String collaborator, String number, User user, Unit unit, List<Beneficiary> beneficiarios) {
         this.name = collaborator;
         this.cpf = number;
         this.user = user;
-        this.units = unit;
+        this.unit = unit;
+        this.beneficiarios = beneficiarios;
     }
 }

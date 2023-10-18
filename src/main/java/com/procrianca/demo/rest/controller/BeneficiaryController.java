@@ -1,5 +1,6 @@
 package com.procrianca.demo.rest.controller;
 
+import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
 import jakarta.validation.constraints.NotNull;
@@ -41,12 +42,15 @@ public class BeneficiaryController {
     })
     @PostMapping("/beneficiaries")
     @ResponseStatus(HttpStatus.CREATED)
-    public Beneficiary saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary){
+    public ResponseEntity<AuthResponse> saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary){
         log.info("Calling endpoint to save a beneficiary in controller: " + log.getName());
 
-        // Chame o método saveBeneficiary com o objeto passado no corpo da solicitação
-        var benefiarySaved = beneficiaryService.saveBeneficiary(beneficiary);
-        return benefiarySaved;
+        var beneficiarySaved = beneficiaryService.saveBeneficiary(beneficiary);
+        if (beneficiarySaved == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse("Beneficiário não pôde ser inserido.", HttpStatusCode.BAD_REQUEST.getValue()) {});
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse("Beneficiário criado com sucesso.", HttpStatusCode.CREATED.getValue()) {});
+        }
     }
 
     @Operation(summary = "Update a beneficary")
@@ -61,9 +65,9 @@ public class BeneficiaryController {
                                                           @RequestBody @Valid Beneficiary beneficiary){
         log.info("Calling endpoint to update a beneficiary in controller: " + log.getName());
 
-        var benefiaryUpdated = this.beneficiaryService.update(id, beneficiary);
-        if (benefiaryUpdated == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Beneficiário não encontrado.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
+        var beneficiaryUpdated = this.beneficiaryService.update(id, beneficiary);
+        if (beneficiaryUpdated == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Beneficiário não pôde ser atualizado.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
         }
         return ResponseEntity.ok(new AuthResponse("Beneficiário atualizado com sucesso", HttpStatusCode.OK.getValue()));
     }

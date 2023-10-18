@@ -48,4 +48,8 @@ public class CollaboratorService {
         this.repository.delete(collaborator.get());
         return true;
     }
+
+    public Collaborator findCollaboratorById(Integer id) {
+        return repository.findCollaboratorById(id);
+    }
 }

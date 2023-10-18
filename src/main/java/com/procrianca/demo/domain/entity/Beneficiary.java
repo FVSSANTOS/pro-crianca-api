@@ -40,6 +40,10 @@ public class Beneficiary {
     private String cpf;
 
     @ManyToOne
-    @JoinColumn(name = "units_id")
-    private Unit units;
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
+
+    @ManyToOne
+    @JoinColumn(name = "collaborator_id")
+    private Collaborator collaborator;
 }
