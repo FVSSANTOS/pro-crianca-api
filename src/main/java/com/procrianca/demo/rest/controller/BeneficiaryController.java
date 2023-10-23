@@ -102,4 +102,6 @@ public class BeneficiaryController {
         return ResponseEntity.status(HttpStatus.OK).body(beneficiaries);
     }
 
+
+
 }

@@ -82,4 +82,25 @@ public class BeneficiaryService {
             return true;
         }
     }
+
+    // Filters
+    public List<Beneficiary> findBeneficiaryByCpf(String cpf) {
+        return repository.findBeneficiaryByCpf(cpf);
+    }
+
+    public List<Beneficiary> findBeneficiaryByName(String name) {
+        return repository.findBeneficiaryByName(name);
+    }
+
+    public List<Beneficiary> findBeneficiaryBySituation(String situation) {
+        return repository.findBeneficiaryBySituation(situation);
+    }
+
+    public List<Beneficiary> findBeneficiaryByGender(String gender) {
+        return repository.findBeneficiaryByGender(gender);
+    }
+
+    public List<Beneficiary> findBeneficiaryByIdCollaborator(Integer idCollaborator) {
+        return repository.findBeneficiaryByIdCollaborator(idCollaborator);
+    }
 }
