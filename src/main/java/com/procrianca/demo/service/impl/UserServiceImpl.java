@@ -17,6 +17,7 @@ import com.procrianca.demo.exception.passwordInvalidException;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserDetailsService {
         if (userExists.isPresent() || user == null || user.getLogin() == null || user.getLogin() == "") {
             return null;
         } else {
-            UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getCreatedAt(), user.getUpdatedAt());
+            UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getId());
             BeanUtils.copyProperties(user, userRecordDto);
             return repository.save(user);
         }
@@ -79,5 +80,12 @@ public class UserServiceImpl implements UserDetailsService {
     }
 
 
+    public Optional<User> findUserById(Integer id) {
+        return repository.findUserById(id);
+    }
+
+    public User findUserByLogin(String login) {
+        return repository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
+    }
     
 }

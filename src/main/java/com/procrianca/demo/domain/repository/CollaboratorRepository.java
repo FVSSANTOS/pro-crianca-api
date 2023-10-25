@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CollaboratorRepository extends JpaRepository<Collaborator,Integer> {
     Collaborator findCollaboratorById(Integer id);
+    Collaborator findCollaboratorByCpf(String cpf);
 }

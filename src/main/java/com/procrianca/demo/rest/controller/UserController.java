@@ -3,6 +3,7 @@ package com.procrianca.demo.rest.controller;
 
 import com.procrianca.demo.domain.dtos.CredentialsDTO;
 import com.procrianca.demo.domain.dtos.TokenDTO;
+import com.procrianca.demo.domain.dtos.UserRecordDto;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -95,8 +96,11 @@ public class UserController {
             UserDetails authenticated = userService.authenticate(user);
 
             if (correctPassword(user.getPassword(), authenticated.getPassword())) {
-                String token = jwtService.gerarToken(user);
-                return ResponseEntity.ok(new TokenDTO(token, "Logado com sucesso.", HttpStatusCode.OK.getValue()));
+                String token = jwtService.generateToken(user);
+
+                User userByLogin = this.userService.findUserByLogin(user.getLogin());
+                UserRecordDto userRecordDto = new UserRecordDto(userByLogin.getLogin(), userByLogin.getPassword(), userByLogin.getId());
+                return ResponseEntity.ok(new TokenDTO(token, "Logado com sucesso.", HttpStatusCode.OK.getValue(), userRecordDto));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse("Login ou senha incorreta.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
             }

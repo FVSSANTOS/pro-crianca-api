@@ -35,7 +35,7 @@ public class UnitController {
 
     private final UnitService unitService;
 
-    @PostMapping("/unit")
+    @PostMapping("/units")
     @ResponseStatus(HttpStatus.CREATED)
     public Unit saveUnit(@RequestBody @Valid Unit unit){
         log.info("Calling endpoint to save a unit in controller: " + log.getName());
@@ -51,7 +51,7 @@ public class UnitController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Beneficiary.class)))
     })
-    @PutMapping("/unit/{id}")
+    @PutMapping("/units/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AuthResponse> updateUnit(@PathVariable(value = "id") @NotNull @Positive Integer id,
                                                            @RequestBody @Valid Unit unit){
@@ -69,7 +69,7 @@ public class UnitController {
             @ApiResponse(responseCode = "200", description = "Unit deleted"),
             @ApiResponse(responseCode = "404", description = "Unit not found")
     })
-    @DeleteMapping("/unit/{id}")
+    @DeleteMapping("/units/{id}")
     public ResponseEntity<AuthResponse> deleteUnit(@PathVariable(value = "id") @NotNull @Positive Integer id) {
         log.info("Calling endpoint to delete one unit in controller: " + log.getName());
         var unit = this.unitService.deleteUnit(id);

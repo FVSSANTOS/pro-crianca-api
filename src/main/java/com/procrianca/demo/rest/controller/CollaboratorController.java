@@ -36,12 +36,16 @@ public class CollaboratorController {
 
     @PostMapping("/collaborators")
     @ResponseStatus(HttpStatus.CREATED)
-    public Collaborator saveCollaborator(@RequestBody @Valid Collaborator collaborator){
+    public ResponseEntity<AuthResponse> saveCollaborator(@RequestBody @Valid Collaborator collaborator){
         log.info("Calling endpoint to save a collaborator in controller: " + log.getName());
 
 
         var collaboratorSaved = collaboratorService.saveCollaborator(collaborator);
-        return collaboratorSaved;
+        if (collaboratorSaved == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse("Colaborador não pôde ser inserido.", HttpStatusCode.BAD_REQUEST.getValue()) {});
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse("Colaborador criado com sucesso.", HttpStatusCode.CREATED.getValue()) {});
+        }
     }
 
     @Operation(summary = "Update a collaborator")
@@ -87,9 +91,6 @@ public class CollaboratorController {
     public ResponseEntity<List<Collaborator>> getAllCollaborators() {
         log.info("Calling endpoint to list all collaboratorss in controller: " + log.getName());
         List<Collaborator> collaborators = this.collaboratorService.listAllCollaborators();
-        if(collaborators.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body((List<Collaborator>) new AuthResponse("Não existe nenhum colaborador.", HttpStatusCode.NOT_FOUND.getValue()));
-        }
         return ResponseEntity.status(HttpStatus.OK).body(collaborators);
     }
 }

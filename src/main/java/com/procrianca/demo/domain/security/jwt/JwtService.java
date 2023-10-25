@@ -23,7 +23,7 @@ public class JwtService {
     @Value("${security.jwt.chave-assinatura}")
     private String chaveAsssinatura;
 
-    public String gerarToken(User user){
+    public String generateToken(User user){
         long expString = Long.valueOf(expiracao);
         LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
         Date date = Date.from(dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant());

@@ -1,6 +1,5 @@
 package com.procrianca.demo.rest.controller;
 
-import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
 import jakarta.validation.constraints.NotNull;
@@ -67,9 +66,9 @@ public class BeneficiaryController {
 
         var beneficiaryUpdated = this.beneficiaryService.update(id, beneficiary);
         if (beneficiaryUpdated == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Beneficiário não pôde ser atualizado.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse("Beneficiário não pôde ser atualizado..", HttpStatusCode.BAD_REQUEST.getValue()) {});
         }
-        return ResponseEntity.ok(new AuthResponse("Beneficiário atualizado com sucesso", HttpStatusCode.OK.getValue()));
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse("Beneficiário atualizado com sucesso.", HttpStatusCode.CREATED.getValue()) {});
     }
 
     @Operation(summary = "Delete beneficiary by ID")
@@ -89,16 +88,12 @@ public class BeneficiaryController {
 
     @Operation(summary = "Retrieve all beneficiaries")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Listed Beneficiaries"),
-        @ApiResponse(responseCode = "404", description = "Beneficiaries not found")
+        @ApiResponse(responseCode = "200", description = "Listed Beneficiaries", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Beneficiary.class))),
     })
     @GetMapping("/beneficiaries")
     public ResponseEntity<List<Beneficiary>> getAllBeneficiaries() {
         log.info("Calling endpoint to list all beneficiaries in controller: " + log.getName());
         List<Beneficiary> beneficiaries = this.beneficiaryService.listAllBeneficiaries();
-        if(beneficiaries.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body((List<Beneficiary>) new AuthResponse("Não existe nenhum beneficiário.", HttpStatusCode.NOT_FOUND.getValue()));
-        }
         return ResponseEntity.status(HttpStatus.OK).body(beneficiaries);
     }
 

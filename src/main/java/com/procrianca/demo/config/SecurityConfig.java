@@ -37,7 +37,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth ->
                 auth
-                    .requestMatchers(HttpMethod.GET,"/api/v1/users")
+                    .requestMatchers(HttpMethod.GET,"/api/v1/users/**")
                         .permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/v1/beneficiaries/**")
                         .hasAnyRole("ADMIN","USER")
@@ -54,6 +54,14 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.PUT,"/api/v1/collaborators/**")
                         .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/v1/collaborators/**")
+                        .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.GET,"/api/v1/units/**")
+                        .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/units/**")
+                        .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/v1/units/**")
+                        .hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/v1/units/**")
                         .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth")
                         .permitAll()

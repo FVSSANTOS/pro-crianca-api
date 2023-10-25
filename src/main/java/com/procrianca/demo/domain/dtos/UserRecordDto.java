@@ -3,9 +3,20 @@ package com.procrianca.demo.domain.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
-
 public record UserRecordDto(
-        @NotBlank @NotNull String login, @NotBlank @NotNull String password, @NotNull LocalDateTime createdAt, @NotNull LocalDateTime updatedAt
+        @NotBlank @NotNull String login,
+        @NotBlank @NotNull String password,
+        @NotBlank @NotNull Integer id
 ) {
+
+    public UserRecordDto(@NotBlank @NotNull String login, @NotBlank @NotNull String password, @NotBlank @NotNull Integer id) {
+        this.login = login;
+        this.password = password;
+        this.id = id;
+    }
+
+    public String getLoginPasswordCombo() {
+        return login + ":" + password;
+    }
+
 }
