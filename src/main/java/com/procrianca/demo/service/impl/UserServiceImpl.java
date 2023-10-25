@@ -3,7 +3,6 @@ package com.procrianca.demo.service.impl;
 import com.procrianca.demo.domain.dtos.UserRecordDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.repository.UserRepository;
-import com.procrianca.demo.exception.passwordInvalidException;
 
 import jakarta.transaction.Transactional;
 
@@ -68,7 +66,7 @@ public class UserServiceImpl implements UserDetailsService {
             return user;
         }
 
-        throw new passwordInvalidException();
+        return null;
     }
 
     private boolean correctPassword(String inputPassword, String storedPassword) {

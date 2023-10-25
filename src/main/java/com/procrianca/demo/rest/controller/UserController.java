@@ -88,7 +88,7 @@ public class UserController {
     @PostMapping("/auth")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody CredentialsDTO credenciais) {
         log.info("Calling endpoint to authenticate a users in controller: " + log.getName());
-        try {
+
             User user = User.builder()
                     .login(credenciais.getLogin())
                     .password(credenciais.getPassword())
@@ -96,20 +96,17 @@ public class UserController {
 
             UserDetails authenticated = userService.authenticate(user);
 
-            if (correctPassword(user.getPassword(), authenticated.getPassword())) {
-                String token = jwtService.generateToken(user);
+            if (authenticated != null) {
+                if (correctPassword(user.getPassword(), authenticated.getPassword())) {
+                    String token = jwtService.generateToken(user);
 
-                User userByLogin = this.userService.findUserByLogin(user.getLogin());
+                    AuthoritiesDTO authoritiesDTO = AuthoritiesDTO.fromUserDetails(authenticated);
 
-                AuthoritiesDTO authoritiesDTO = AuthoritiesDTO.fromUserDetails(authenticated);
-
-                return ResponseEntity.ok(new TokenDTO(token, "Logado com sucesso.", HttpStatusCode.OK.getValue(), authoritiesDTO));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse("Login ou senha incorreta.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
+                    return ResponseEntity.ok(new TokenDTO(token, "Logado com sucesso.", HttpStatusCode.OK.getValue(), authoritiesDTO));
+                }
             }
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AuthResponse("Usuário não encontrado.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
-        }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse("Login ou senha incorreta.", HttpStatusCode.UNAUTHORIZED.getValue()) {});
+
     }
 
     private boolean correctPassword(String senhaDigitada, String senhaArmazenada) {
