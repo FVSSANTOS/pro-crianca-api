@@ -4,10 +4,12 @@
 ## Documentação Técnica
 
 ### Tecnologias Utilizadas
-- Java Development Kit (JDK) 8 ou superior
+- Java Development Kit (JDK) 17
 - Spring Boot
 - Apache Maven
-- MySQL (ou qualquer outro banco de dados relacional compatível)
+- Swagger
+- Docker
+- SQL Server (ou qualquer outro banco de dados relacional compatível)
 
 ## Documentação API: CRUD e Login de Usuários
 
