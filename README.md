@@ -9,7 +9,7 @@
 - Apache Maven
 - Swagger
 - Docker
-- SQL Server (ou qualquer outro banco de dados relacional compatível)
+- SQL Server
 
 ## Documentação API: CRUD e Login de Usuários
 
