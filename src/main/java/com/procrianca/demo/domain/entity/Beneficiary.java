@@ -8,8 +8,8 @@ import java.util.Date;
 
 import org.hibernate.annotations.Columns;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.boot.actuate.autoconfigure.health.HealthProperties.Status;
 
+import com.procrianca.demo.domain.enums.Status;
 import com.procrianca.demo.domain.enums.Gender;
 import com.procrianca.demo.domain.enums.Race;
 import com.procrianca.demo.domain.enums.Shift;
@@ -56,7 +56,7 @@ public class Beneficiary {
     private String cpf;
 
     @Column
-    private Date exit;
+    private Date exitDate;
 
     @Column
     private Date prohibited;
