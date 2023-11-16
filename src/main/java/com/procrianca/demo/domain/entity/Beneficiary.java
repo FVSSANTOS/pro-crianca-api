@@ -1,15 +1,13 @@
 package com.procrianca.demo.domain.entity;
 
+import com.procrianca.demo.domain.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-import org.hibernate.annotations.Columns;
-import org.hibernate.validator.constraints.br.CPF;
 
-import com.procrianca.demo.domain.enums.Status;
 import com.procrianca.demo.domain.enums.Gender;
 import com.procrianca.demo.domain.enums.Race;
 import com.procrianca.demo.domain.enums.Shift;
@@ -25,7 +23,7 @@ import lombok.Data;
 @NoArgsConstructor
 @Builder
 public class Beneficiary {
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
@@ -35,24 +33,27 @@ public class Beneficiary {
 
     @Column
     private String responsibleName;
-   
+
     @Column
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column
     private Integer age;
 
-    @Column  
+    @Column
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Race race;
 
-    @Column 
+    @Column
+    @Enumerated(EnumType.STRING)
     private Shift shift;
 
     @Column
-    @CPF
     private String cpf;
 
     @Column
@@ -84,7 +85,7 @@ public class Beneficiary {
 
     @Column
     private Integer quantity;
-    
+
     @Column
     private String project;
 

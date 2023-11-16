@@ -1,6 +1,7 @@
 package com.procrianca.demo.domain.enums;
 
 public enum Race {
+    QUALQUER(0),
     PRETO(1),
     PARDO(2),
     AMARELO(3),
@@ -8,11 +9,11 @@ public enum Race {
 
     private int race;
 
-    private Race(int race){
+    private Race(int race) {
         this.race = race;
     }
 
-    public int getRace(){
+    public int getRace() {
         return race;
     }
 }

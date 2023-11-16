@@ -2,17 +2,18 @@ package com.procrianca.demo.domain.enums;
 
 
 public enum Gender {
-    FEMININO('F'),
-    MASCULINO('M'),
-    NAO_ESPECIFICADO('N');
+    QUALQUER(0),
+    FEMININO(1),
+    MASCULINO(2),
+    NAO_ESPECIFICADO(3);
 
-    private final char gender;
+    private final int gender;
 
-    private Gender(char gender){
+    private Gender(int gender) {
         this.gender = gender;
     }
 
-    public char getGender(){
+    public int getGender() {
         return gender;
     }
 }

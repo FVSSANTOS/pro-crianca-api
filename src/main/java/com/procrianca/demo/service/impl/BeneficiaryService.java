@@ -2,6 +2,8 @@ package com.procrianca.demo.service.impl;
 
 import com.procrianca.demo.domain.entity.Collaborator;
 import com.procrianca.demo.domain.entity.Unit;
+import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class BeneficiaryService {
 
@@ -27,9 +30,9 @@ public class BeneficiaryService {
 
 
     @Transactional
-    public Beneficiary saveBeneficiary(Beneficiary beneficiary){
+    public Beneficiary saveBeneficiary(Beneficiary beneficiary) {
         var beneficiaryIsNotValid =
-                beneficiary.getUnit() == null || beneficiary == null;
+                beneficiary == null || beneficiary.getUnit() == null;
 
         if (beneficiary.getUnit() != null && beneficiary.getCollaborator() != null) {
             Integer unitId = beneficiary.getUnit().getId();
@@ -50,7 +53,7 @@ public class BeneficiaryService {
         }
     }
 
-    public List<Beneficiary> listAllBeneficiaries(){
+    public List<Beneficiary> listAllBeneficiaries() {
         return repository.findAll();
     }
 
@@ -81,5 +84,12 @@ public class BeneficiaryService {
             this.repository.delete(beneficiary.get());
             return true;
         }
+    }
+
+    public List<Beneficiary> listBeneficiariesWithFilter(BeneficiaryFilter beneficiaryFilter) {
+        log.info(beneficiaryFilter.toString());
+
+        return repository.findAllWithFilter(beneficiaryFilter);
+
     }
 }
