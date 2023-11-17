@@ -4,9 +4,9 @@ import com.procrianca.demo.domain.enums.Gender;
 import com.procrianca.demo.domain.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
-@Component
+
+
 @Data
 @AllArgsConstructor
 public class BeneficiaryFilter {

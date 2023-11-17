@@ -106,11 +106,11 @@ public class BeneficiaryController {
 
     @Operation(summary = "Retrieve all beneficiaries in filter")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Listed Beneficiaries", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Beneficiary.class))),
+            @ApiResponse(responseCode = "200", description = "Listed Beneficiaries in filter", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Beneficiary.class))),
     })
-    @GetMapping("/beneficiaries/filter")
+    @PostMapping("/beneficiaries/filter")
     public ResponseEntity<List<Beneficiary>> getBeneficiariesFilter(@RequestBody BeneficiaryFilter beneficiaryFilter) {
-        log.info("Entrou no filtros de beneficiarios");
+        log.info("Calling endpoint to list all beneficiaries in controller using a filter");
         List<Beneficiary> beneficiaryList = beneficiaryService.listBeneficiariesWithFilter(beneficiaryFilter);
         return ResponseEntity.ok(beneficiaryList);
     }
