@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
-import com.procrianca.demo.domain.enums.Gender;
-import com.procrianca.demo.domain.enums.Race;
-import com.procrianca.demo.domain.enums.Shift;
+import com.procrianca.demo.domain.enums.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
