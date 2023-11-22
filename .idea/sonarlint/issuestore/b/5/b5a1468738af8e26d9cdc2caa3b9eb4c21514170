@@ -1,0 +1,15 @@
+
+ƒ
+java:S1488G"hImmediately return this expression instead of assigning it to the temporary variable "beneficiarySaved".(âÌó©úÿÿÿÿ
+a
+java:S2789@"FEnsure this "Optional" could never be null and remove this null-check.(™ò©İşÿÿÿÿ
+a
+java:S2789O"FEnsure this "Optional" could never be null and remove this null-check.(™ò©İşÿÿÿÿ
+_
+java:S2259%"IA "NullPointerException" could be thrown; "beneficiary" is nullable here.(¾ú•
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(êæÄŞ
