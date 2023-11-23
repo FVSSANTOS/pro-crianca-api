@@ -1,5 +1,6 @@
 package com.procrianca.demo.rest.controller;
 
+import com.procrianca.demo.domain.entity.BeneficiaryMedic;
 import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
@@ -42,9 +43,10 @@ public class BeneficiaryController {
     })
     @PostMapping("/beneficiaries")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AuthResponse> saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary) {
+    public ResponseEntity<AuthResponse> saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary, BeneficiaryMedic beneficiaryMedic) {
         log.info("Calling endpoint to save a beneficiary in controller: " + log.getName());
         log.info(beneficiary.toString());
+        beneficiary.setBeneficiaryMedic(beneficiaryMedic);
 
         var beneficiarySaved = beneficiaryService.saveBeneficiary(beneficiary);
         if (beneficiarySaved == null) {

@@ -151,4 +151,8 @@ public class Beneficiary {
     @ManyToOne
     @JoinColumn(name = "collaborator_id")
     private Collaborator collaborator;
+
+    @OneToOne
+    @JoinColumn(name = "medical_id")
+    private BeneficiaryMedic beneficiaryMedic;
 }
