@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Entity
-@Table(name = "Dados médicos dos beneficiarios")
+@Table(name = "dados_medicos_beneficiario")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +34,7 @@ public class BeneficiaryMedic {
     private Boolean situationHome;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private BloodType bloodType;
 
     @Column

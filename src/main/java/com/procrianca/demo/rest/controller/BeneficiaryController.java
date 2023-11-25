@@ -35,6 +35,7 @@ public class BeneficiaryController {
 
     private final BeneficiaryService beneficiaryService;
 
+
     @Operation(summary = "Create a new beneficary")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Beneficiary created",
@@ -43,10 +44,9 @@ public class BeneficiaryController {
     })
     @PostMapping("/beneficiaries")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AuthResponse> saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary, BeneficiaryMedic beneficiaryMedic) {
+    public ResponseEntity<AuthResponse> saveBeneficiary(@RequestBody @Valid Beneficiary beneficiary) {
         log.info("Calling endpoint to save a beneficiary in controller: " + log.getName());
         log.info(beneficiary.toString());
-        beneficiary.setBeneficiaryMedic(beneficiaryMedic);
 
         var beneficiarySaved = beneficiaryService.saveBeneficiary(beneficiary);
         if (beneficiarySaved == null) {
