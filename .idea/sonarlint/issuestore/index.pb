@@ -29,3 +29,7 @@ i
 9src/main/java/com/procrianca/demo/domain/entity/Unit.java,a\6\a6269690822f746b154fe9fc0e201aa148ac9a44
 i
 9src/main/java/com/procrianca/demo/domain/entity/User.java,b\3\b3cd4b4cb0d4d0fef79e39a4e56745f506e53ed6
+u
+Esrc/main/java/com/procrianca/demo/domain/enums/MatriculationType.java,a\0\a0dd9302015b8848d92a99d36719550ffcad8d17
+
+Osrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryRespository.java,6\e\6e68a43958b5201c7bb580a7d956aec8b0461190

@@ -1,6 +1,5 @@
 package com.procrianca.demo.domain.entity;
 
-import com.procrianca.demo.domain.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.NoArgsConstructor;
@@ -143,6 +142,25 @@ public class Beneficiary {
 
     @Column
     private boolean sanitized;
+
+    @Column
+    private String professionalLicense;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private MatriculationType matriculationType;
+
+    @Column
+    private Integer houseNumber;
+
+    @Column
+    private String apartment;
+
+    @Column
+    private String state;
+
+    @Column
+    private Double rent;
 
     @ManyToOne
     @JoinColumn(name = "unit_id")
