@@ -37,3 +37,9 @@ p
 Osrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryRespository.java,6\e\6e68a43958b5201c7bb580a7d956aec8b0461190
 {
 Ksrc/main/java/com/procrianca/demo/service/impl/BeneficiaryMedicService.java,1\7\176f20f6a649a21fd35936095d840e601220205c
+É
+Ssrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryMedicRepository.java,4\1\414683e43111cf95415d4c4b6ae8ee1847e7c514
+â
+Ysrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryResponsibleRepository.java,7\0\70c65fcc435f51dbf555e1c7b8638332311be655
+Å
+Qsrc/main/java/com/procrianca/demo/service/impl/BeneficiaryResponsibleService.java,d\4\d419613ba8bb86dbd38639f79dec7df678951897
