@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.procrianca.demo.domain.repository.BeneficiaryRespository;
+import com.procrianca.demo.domain.repository.BeneficiaryRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class BeneficiaryService {
 
     @Autowired
-    private BeneficiaryRespository repository;
+    private BeneficiaryRepository repository;
 
     @Autowired
     private UnitService unitService;

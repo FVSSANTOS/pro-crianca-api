@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
-public interface BeneficiaryRespository extends JpaRepository<Beneficiary, Integer> {
+public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Integer> {
     Optional<Beneficiary> findByCpf(String cpf);
 
     Unit findUnitById(Integer id);

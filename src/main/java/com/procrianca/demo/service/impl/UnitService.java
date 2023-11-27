@@ -1,8 +1,6 @@
 package com.procrianca.demo.service.impl;
 
-import com.procrianca.demo.domain.entity.Beneficiary;
 import com.procrianca.demo.domain.entity.Unit;
-import com.procrianca.demo.domain.repository.BeneficiaryRespository;
 import com.procrianca.demo.domain.repository.UnitRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
