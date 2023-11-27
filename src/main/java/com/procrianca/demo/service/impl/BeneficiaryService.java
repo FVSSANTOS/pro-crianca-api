@@ -1,15 +1,12 @@
 package com.procrianca.demo.service.impl;
 
-import com.procrianca.demo.domain.entity.BeneficiaryMedic;
-import com.procrianca.demo.domain.entity.Collaborator;
-import com.procrianca.demo.domain.entity.Unit;
+import com.procrianca.demo.domain.entity.*;
 import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.procrianca.demo.domain.entity.Beneficiary;
 import com.procrianca.demo.domain.repository.BeneficiaryRepository;
 
 import jakarta.transaction.Transactional;
@@ -32,13 +29,16 @@ public class BeneficiaryService {
     @Autowired
     private BeneficiaryMedicService beneficiaryMedicService;
 
+    @Autowired
+    private BeneficiaryEducationalService beneficiaryEducationalService;
 
     @Transactional
     public Beneficiary saveBeneficiary(Beneficiary beneficiary) {
         var beneficiaryIsNotValid =
                 beneficiary == null
                         || beneficiary.getUnit() == null
-                        || beneficiary.getBeneficiaryMedic() == null;
+                        || beneficiary.getBeneficiaryMedic() == null
+                        || beneficiary.getBeneficiaryEducational() == null;
 
         if (beneficiaryIsNotValid) {
             return null;
@@ -46,6 +46,7 @@ public class BeneficiaryService {
 
 
         BeneficiaryMedic beneficiaryMedic = beneficiaryMedicService.saveBeneficiaryMedical(beneficiary.getBeneficiaryMedic());
+        BeneficiaryEducational beneficiaryEducational = beneficiaryEducationalService.saveBeneficiaryEducational(beneficiary.getBeneficiaryEducational());
 
 
         Integer unitId = beneficiary.getUnit().getId();
@@ -53,6 +54,7 @@ public class BeneficiaryService {
 
         beneficiary.setUnit(unit);
         beneficiary.setBeneficiaryMedic(beneficiaryMedic);
+        beneficiary.setBeneficiaryEducational(beneficiaryEducational);
 
         if (beneficiary.getCollaborator() != null) {
 

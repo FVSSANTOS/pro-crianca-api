@@ -11,7 +11,7 @@ public class BeneficiaryMedicService {
     @Autowired
     private BeneficiaryMedicRepository beneficiaryMedicRepository;
 
-    public BeneficiaryMedic saveBeneficiaryMedical(BeneficiaryMedic beneficiaryMedic){
+    public BeneficiaryMedic saveBeneficiaryMedical(BeneficiaryMedic beneficiaryMedic) {
         return beneficiaryMedicRepository.save(beneficiaryMedic);
     }
 
