@@ -29,3 +29,11 @@ i
 9src/main/java/com/procrianca/demo/domain/entity/Unit.java,a\6\a6269690822f746b154fe9fc0e201aa148ac9a44
 i
 9src/main/java/com/procrianca/demo/domain/entity/User.java,b\3\b3cd4b4cb0d4d0fef79e39a4e56745f506e53ed6
+{
+Ksrc/main/java/com/procrianca/demo/domain/entity/BeneficiaryResponsible.java,a\d\ad9558409e8f37c4efdd779ca4e0ae16db18003a
+p
+@src/main/java/com/procrianca/demo/domain/enums/Relationship.java,b\5\b559c4300165950c17ecda7c2493b3407b1f7c6d
+
+Osrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryRespository.java,6\e\6e68a43958b5201c7bb580a7d956aec8b0461190
+{
+Ksrc/main/java/com/procrianca/demo/service/impl/BeneficiaryMedicService.java,1\7\176f20f6a649a21fd35936095d840e601220205c

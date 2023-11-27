@@ -1,6 +1,5 @@
 package com.procrianca.demo.domain.entity;
 
-import com.procrianca.demo.domain.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.NoArgsConstructor;
@@ -155,4 +154,8 @@ public class Beneficiary {
     @OneToOne
     @JoinColumn(name = "medical_id")
     private BeneficiaryMedic beneficiaryMedic;
+
+    @OneToOne
+    @JoinColumn(name = "responsible_id")
+    private BeneficiaryResponsible beneficiaryResponsible;
 }
