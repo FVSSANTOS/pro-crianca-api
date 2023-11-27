@@ -1,5 +1,6 @@
 package com.procrianca.demo.rest.controller;
 
+import com.procrianca.demo.domain.entity.BeneficiaryMedic;
 import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
@@ -33,6 +34,7 @@ import java.util.List;
 public class BeneficiaryController {
 
     private final BeneficiaryService beneficiaryService;
+
 
     @Operation(summary = "Create a new beneficary")
     @ApiResponses(value = {

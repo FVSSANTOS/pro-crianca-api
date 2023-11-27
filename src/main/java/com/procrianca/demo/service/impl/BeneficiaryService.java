@@ -1,5 +1,6 @@
 package com.procrianca.demo.service.impl;
 
+import com.procrianca.demo.domain.entity.BeneficiaryMedic;
 import com.procrianca.demo.domain.entity.Collaborator;
 import com.procrianca.demo.domain.entity.Unit;
 import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
@@ -28,29 +29,41 @@ public class BeneficiaryService {
     @Autowired
     private CollaboratorService collaboratorService;
 
+    @Autowired
+    private BeneficiaryMedicService beneficiaryMedicService;
+
 
     @Transactional
     public Beneficiary saveBeneficiary(Beneficiary beneficiary) {
         var beneficiaryIsNotValid =
-                beneficiary == null || beneficiary.getUnit() == null;
+                beneficiary == null
+                        || beneficiary.getUnit() == null
+                        || beneficiary.getBeneficiaryMedic() == null;
 
-        if (beneficiary.getUnit() != null && beneficiary.getCollaborator() != null) {
-            Integer unitId = beneficiary.getUnit().getId();
-            Unit unit = unitService.findUnitById(unitId);
+        if (beneficiaryIsNotValid) {
+            return null;
+        }
+
+
+        BeneficiaryMedic beneficiaryMedic = beneficiaryMedicService.saveBeneficiaryMedical(beneficiary.getBeneficiaryMedic());
+
+
+        Integer unitId = beneficiary.getUnit().getId();
+        Unit unit = unitService.findUnitById(unitId);
+
+        beneficiary.setUnit(unit);
+        beneficiary.setBeneficiaryMedic(beneficiaryMedic);
+
+        if (beneficiary.getCollaborator() != null) {
 
             Integer collaboratorId = beneficiary.getCollaborator().getId();
             Collaborator collaborator = collaboratorService.findCollaboratorById(collaboratorId);
-
-            beneficiary.setUnit(unit);
             beneficiary.setCollaborator(collaborator);
         }
 
 
-        if (beneficiaryIsNotValid) {
-            return null;
-        } else {
-            return repository.save(beneficiary);
-        }
+        return repository.save(beneficiary);
+
     }
 
     public List<Beneficiary> listAllBeneficiaries() {
