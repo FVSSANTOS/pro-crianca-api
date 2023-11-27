@@ -49,3 +49,5 @@ Osrc/main/java/com/procrianca/demo/domain/repository/CollaboratorRepository.java
 Nsrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryRepository.java,b\9\b9d5d918a367ddabcb422a1f16a0056f3ab20ae2
 o
 ?src/main/java/com/procrianca/demo/service/impl/UnitService.java,f\4\f4a30840162f574b381eb241aea14205cd0e6de2
+u
+Esrc/main/java/com/procrianca/demo/domain/enums/MatriculationType.java,a\0\a0dd9302015b8848d92a99d36719550ffcad8d17
