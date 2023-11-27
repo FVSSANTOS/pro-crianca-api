@@ -29,3 +29,17 @@ i
 9src/main/java/com/procrianca/demo/domain/entity/Unit.java,a\6\a6269690822f746b154fe9fc0e201aa148ac9a44
 i
 9src/main/java/com/procrianca/demo/domain/entity/User.java,b\3\b3cd4b4cb0d4d0fef79e39a4e56745f506e53ed6
+
+Osrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryRespository.java,6\e\6e68a43958b5201c7bb580a7d956aec8b0461190
+{
+Ksrc/main/java/com/procrianca/demo/service/impl/BeneficiaryMedicService.java,1\7\176f20f6a649a21fd35936095d840e601220205c
+ƒ
+Ssrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryMedicRepository.java,4\1\414683e43111cf95415d4c4b6ae8ee1847e7c514
+{
+Ksrc/main/java/com/procrianca/demo/domain/entity/BeneficiaryEducational.java,a\7\a7b4c24a252b71ff4c4b272536287bd16a5f44b7
+‰
+Ysrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryEducationalRepository.java,5\5\5532258629a151da8106c986394b16be5af3db72
+~
+Nsrc/main/java/com/procrianca/demo/domain/repository/BeneficiaryRepository.java,b\9\b9d5d918a367ddabcb422a1f16a0056f3ab20ae2
+
+Osrc/main/java/com/procrianca/demo/domain/repository/CollaboratorRepository.java,6\c\6cb9f987bf859fb5cdb7a4043f25f809ba1b1475
