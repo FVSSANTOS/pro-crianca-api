@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Email;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.procrianca.demo.domain.enums.*;
