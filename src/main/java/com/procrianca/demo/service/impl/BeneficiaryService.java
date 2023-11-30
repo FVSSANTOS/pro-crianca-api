@@ -33,6 +33,9 @@ public class BeneficiaryService {
     @Autowired
     private BeneficiaryResponsibleService beneficiaryResponsibleService;
 
+    @Autowired
+    private BeneficiaryEducationalService beneficiaryEducationalService;
+
 
     @Transactional
     public Beneficiary saveBeneficiary(Beneficiary beneficiary) {
@@ -40,21 +43,20 @@ public class BeneficiaryService {
                 beneficiary == null
                         || beneficiary.getUnit() == null
                         || beneficiary.getBeneficiaryMedic() == null
-                        || beneficiary.getBeneficiaryResponsible() == null;
+                        || beneficiary.getBeneficiaryResponsible() == null
+                        || beneficiary.getBeneficiaryEducational() == null;
 
         if (beneficiaryIsNotValid) {
             return null;
         }
 
         List<BeneficiaryResponsible> insertedResponsible = new ArrayList<>();
-
         beneficiary.getBeneficiaryResponsible().forEach(re -> {
             insertedResponsible.add(beneficiaryResponsibleService.saveBeneficiaryResponsible(re));
         });
 
-
         BeneficiaryMedic beneficiaryMedic = beneficiaryMedicService.saveBeneficiaryMedical(beneficiary.getBeneficiaryMedic());
-
+        BeneficiaryEducational beneficiaryEducational = beneficiaryEducationalService.saveBeneficiaryEducational(beneficiary.getBeneficiaryEducational());
 
         Integer unitId = beneficiary.getUnit().getId();
         Unit unit = unitService.findUnitById(unitId);
@@ -62,6 +64,7 @@ public class BeneficiaryService {
         beneficiary.setUnit(unit);
         beneficiary.setBeneficiaryMedic(beneficiaryMedic);
         beneficiary.setBeneficiaryResponsible(insertedResponsible);
+        beneficiary.setBeneficiaryEducational(beneficiaryEducational);
 
         if (beneficiary.getCollaborator() != null) {
 

@@ -179,4 +179,8 @@ public class Beneficiary {
     @OneToMany
     @JoinColumn(name = "responsible_id")
     private List<BeneficiaryResponsible> beneficiaryResponsible;
+
+    @OneToOne
+    @JoinColumn(name = "educational_id")
+    private BeneficiaryEducational beneficiaryEducational;
 }
