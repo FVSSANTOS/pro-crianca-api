@@ -2,7 +2,9 @@ package com.procrianca.demo.domain.enums;
 
 public enum MatriculationType {
     QUALQUER(0),
-    OUTRO(1);
+    NOVATO(1),
+    VETERANO(2),
+    OUTRO(3);
 
     private final int matriculationType;
 

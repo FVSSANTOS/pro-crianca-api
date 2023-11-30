@@ -11,6 +11,7 @@ import com.procrianca.demo.domain.repository.BeneficiaryRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -45,9 +46,14 @@ public class BeneficiaryService {
             return null;
         }
 
+        List<BeneficiaryResponsible> insertedResponsible = new ArrayList<>();
+
+        beneficiary.getBeneficiaryResponsible().forEach(re -> {
+            insertedResponsible.add(beneficiaryResponsibleService.saveBeneficiaryResponsible(re));
+        });
+
 
         BeneficiaryMedic beneficiaryMedic = beneficiaryMedicService.saveBeneficiaryMedical(beneficiary.getBeneficiaryMedic());
-        BeneficiaryResponsible beneficiaryResponsible = beneficiaryResponsibleService.saveBeneficiaryResponsible(beneficiary.getBeneficiaryResponsible());
 
 
         Integer unitId = beneficiary.getUnit().getId();
@@ -55,7 +61,7 @@ public class BeneficiaryService {
 
         beneficiary.setUnit(unit);
         beneficiary.setBeneficiaryMedic(beneficiaryMedic);
-        beneficiary.setBeneficiaryResponsible(beneficiaryResponsible);
+        beneficiary.setBeneficiaryResponsible(insertedResponsible);
 
         if (beneficiary.getCollaborator() != null) {
 

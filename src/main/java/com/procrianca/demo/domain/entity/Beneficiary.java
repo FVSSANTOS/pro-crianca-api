@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.procrianca.demo.domain.enums.*;
 
@@ -175,7 +176,7 @@ public class Beneficiary {
     @JoinColumn(name = "medical_id")
     private BeneficiaryMedic beneficiaryMedic;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "responsible_id")
-    private BeneficiaryResponsible beneficiaryResponsible;
+    private List<BeneficiaryResponsible> beneficiaryResponsible;
 }
