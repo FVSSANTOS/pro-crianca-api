@@ -1,19 +1,17 @@
 package com.procrianca.demo.service.impl;
 
-import com.procrianca.demo.domain.entity.BeneficiaryMedic;
-import com.procrianca.demo.domain.entity.Collaborator;
-import com.procrianca.demo.domain.entity.Unit;
+import com.procrianca.demo.domain.entity.*;
 import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.procrianca.demo.domain.entity.Beneficiary;
-import com.procrianca.demo.domain.repository.BeneficiaryRespository;
+import com.procrianca.demo.domain.repository.BeneficiaryRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -21,7 +19,7 @@ import java.util.List;
 public class BeneficiaryService {
 
     @Autowired
-    private BeneficiaryRespository repository;
+    private BeneficiaryRepository repository;
 
     @Autowired
     private UnitService unitService;
@@ -32,27 +30,41 @@ public class BeneficiaryService {
     @Autowired
     private BeneficiaryMedicService beneficiaryMedicService;
 
+    @Autowired
+    private BeneficiaryResponsibleService beneficiaryResponsibleService;
+
+    @Autowired
+    private BeneficiaryEducationalService beneficiaryEducationalService;
+
 
     @Transactional
     public Beneficiary saveBeneficiary(Beneficiary beneficiary) {
         var beneficiaryIsNotValid =
                 beneficiary == null
                         || beneficiary.getUnit() == null
-                        || beneficiary.getBeneficiaryMedic() == null;
+                        || beneficiary.getBeneficiaryMedic() == null
+                        || beneficiary.getBeneficiaryResponsible() == null
+                        || beneficiary.getBeneficiaryEducational() == null;
 
         if (beneficiaryIsNotValid) {
             return null;
         }
 
+        List<BeneficiaryResponsible> insertedResponsible = new ArrayList<>();
+        beneficiary.getBeneficiaryResponsible().forEach(re -> {
+            insertedResponsible.add(beneficiaryResponsibleService.saveBeneficiaryResponsible(re));
+        });
 
         BeneficiaryMedic beneficiaryMedic = beneficiaryMedicService.saveBeneficiaryMedical(beneficiary.getBeneficiaryMedic());
-
+        BeneficiaryEducational beneficiaryEducational = beneficiaryEducationalService.saveBeneficiaryEducational(beneficiary.getBeneficiaryEducational());
 
         Integer unitId = beneficiary.getUnit().getId();
         Unit unit = unitService.findUnitById(unitId);
 
         beneficiary.setUnit(unit);
         beneficiary.setBeneficiaryMedic(beneficiaryMedic);
+        beneficiary.setBeneficiaryResponsible(insertedResponsible);
+        beneficiary.setBeneficiaryEducational(beneficiaryEducational);
 
         if (beneficiary.getCollaborator() != null) {
 

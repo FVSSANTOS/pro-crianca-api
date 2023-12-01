@@ -14,7 +14,4 @@ public class BeneficiaryMedicService {
     public BeneficiaryMedic saveBeneficiaryMedical(BeneficiaryMedic beneficiaryMedic){
         return beneficiaryMedicRepository.save(beneficiaryMedic);
     }
-
-
-
 }
