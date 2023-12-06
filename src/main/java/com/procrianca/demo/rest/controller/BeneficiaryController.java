@@ -1,9 +1,12 @@
 package com.procrianca.demo.rest.controller;
 
 import com.procrianca.demo.domain.entity.BeneficiaryMedic;
+import com.procrianca.demo.domain.entity.Image;
 import com.procrianca.demo.domain.jpafilters.BeneficiaryFilter;
+import com.procrianca.demo.domain.mapper.ImageMapper;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
+import com.procrianca.demo.service.impl.ImageService;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
@@ -22,7 +25,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -34,7 +41,35 @@ import java.util.List;
 public class BeneficiaryController {
 
     private final BeneficiaryService beneficiaryService;
+    private final ImageService imageService;
+    private final ImageMapper mapper;
 
+    // Formato para receber upload de arquivos: mult-part/formdata
+    @PostMapping("/images")
+    public ResponseEntity save(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("name") String name
+    ) throws IOException {
+
+        log.info("Imagem recebida: name: {}, size: {}", file.getOriginalFilename(), file.getSize());
+        // log.info("Content Type: {}", file.getContentType()); // image/png
+
+        var image = mapper.mapToImage(file, name);
+        var imageSaved = this.imageService.save(image);
+
+        // build url to return
+        URI imageURI = buildImageURL(imageSaved);
+
+        return ResponseEntity.created(imageURI).build();
+    }
+
+    private URI buildImageURL(Image image) {
+        String photoPath = "/" + image.getId();
+        return ServletUriComponentsBuilder
+                .fromCurrentRequestUri()
+                .path(photoPath)
+                .build().toUri();
+    }
 
     @Operation(summary = "Create a new beneficary")
     @ApiResponses(value = {
