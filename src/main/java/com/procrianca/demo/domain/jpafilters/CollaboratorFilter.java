@@ -12,11 +12,13 @@ public class CollaboratorFilter {
     private String role;
     private Status status;
     private Gender gender;
+    private String cpf;
 
     public CollaboratorFilter() {
         this.name = "";
         this.role = "";
         this.status = Status.QUALQUER;
         this.gender = Gender.QUALQUER;
+        this.cpf = "";
     }
 }

@@ -18,6 +18,7 @@ public interface CollaboratorRepository extends JpaRepository<Collaborator,Integ
             "WHERE " +
             "c.name LIKE CONCAt('%',:#{#filter.name},'%') AND " +
             "c.role LIKE CONCAt('%',:#{#filter.role},'%') AND " +
+            "c.cpf LIKE CONCAt('%',:#{#filter.cpf},'%') AND" +
             "(:#{#filter.status.getStatus()} = 0 OR c.status = :#{#filter.status}) AND " +
             "(:#{#filter.gender.getGender()} = 0 OR c.gender = :#{#filter.gender})")
     List<Collaborator> findAllWithFilter(@Param("filter") CollaboratorFilter filter);
