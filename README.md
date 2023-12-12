@@ -1,5 +1,5 @@
 # Pro Criança API
-#### O Movimento Pró Criança é uma entidade sem fins lucrativos, ligada à Igreja Católica, que visa minimizar as dificuldades vivenciadas pelos jovens carentes da Região Metropolitana por meio de trabalhos sociais. Com o objetivo de abordar essa demanda de maneira abrangente, estamos propondo um projeto voltado para o desenvolvimento de um sistema de cadastro e busca altamente eficiente. Nosso foco principal é garantir a facilidade de uso do sistema, além de oferecer portabilidade, confiabilidade, escalabilidade e aderência a princípios éticos.
+#### O Movimento Pró Criança é uma entidade sem fins lucrativos, ligada à Igreja Católica, que visa minimizar as dificuldades vivenciadas pelos jovens carentes da Região Metropolitana do Recife por meio de trabalhos sociais. Com o objetivo de abordar essa demanda de maneira abrangente, estamos propondo um projeto voltado para o desenvolvimento de um sistema de cadastro e busca altamente eficiente. Nosso foco principal é garantir a facilidade de uso do sistema, além de oferecer portabilidade, confiabilidade, escalabilidade e aderência a princípios éticos.
 
 ## Documentação Técnica
 
