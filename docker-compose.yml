@@ -4,17 +4,13 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "test@123"
+      MSSQL_SA_PASSWORD: "test@123"
       MSSQL_DB: MovimentoProCriancaDB
-      MSSQL_USER: Gabrielle"
+      MSSQL_USER: sa
       MSSQL_PASSWORD: test@123
       MSSQL_PID: "Express"
     ports:
       - "1433:1433"
 
-  sql_tools:
-    build:
-      context: .
-      dockerfile: "Dockerfile"  
-    depends_on:
-      - db
+
+

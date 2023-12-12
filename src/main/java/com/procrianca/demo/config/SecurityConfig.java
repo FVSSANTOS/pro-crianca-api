@@ -39,6 +39,8 @@ public class SecurityConfig {
                 auth
                     .requestMatchers(HttpMethod.GET,"/api/v1/users/**")
                         .permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/v1/users/**")
+                        .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.GET,"/api/v1/beneficiaries/**")
                         .hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST,"/api/v1/beneficiaries/**")
