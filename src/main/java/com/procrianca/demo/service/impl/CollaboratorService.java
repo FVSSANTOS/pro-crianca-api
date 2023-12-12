@@ -4,8 +4,10 @@ import com.procrianca.demo.domain.entity.Beneficiary;
 import com.procrianca.demo.domain.entity.Collaborator;
 import com.procrianca.demo.domain.entity.Unit;
 import com.procrianca.demo.domain.entity.User;
+import com.procrianca.demo.domain.jpafilters.CollaboratorFilter;
 import com.procrianca.demo.domain.repository.CollaboratorRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class CollaboratorService {
 
@@ -28,32 +30,34 @@ public class CollaboratorService {
 
     @Transactional
     public Collaborator saveCollaborator(Collaborator collaborator) {
-        if (collaborator == null || collaborator.getUnit() == null) {
+        var collaboratorIsNotValid = collaborator == null
+                || collaborator.getUnit() == null;
+
+        if (collaboratorIsNotValid) {
             return null;
         }
 
         Collaborator collaboratorExists = this.repository.findCollaboratorByCpf(collaborator.getCpf());
-        if (collaboratorExists != null) {
-            return null;
-        }
-
-        for (Beneficiary beneficiary : collaborator.getBeneficiarios()) {
-            beneficiary.setCollaborator(collaborator);
-        }
 
         Integer unitId = collaborator.getUnit().getId();
+
         Unit unit = unitService.findUnitById(unitId);
 
         Integer userId = collaborator.getUser().getId();
         Optional<User> userOptional = userService.findUserById(userId);
 
-        if (unit != null && userOptional.isPresent()) {
-            collaborator.setUnit(unit);
-            collaborator.setUser(userOptional.get());
-            return repository.save(collaborator);
+        if (unit == null || userOptional.isEmpty() || collaboratorExists != null) {
+            return null;
         }
 
-        return null;
+        collaborator.setUnit(unit);
+        collaborator.setUser(userOptional.get());
+
+        for (Beneficiary beneficiary : collaborator.getBeneficiarios()) {
+            beneficiary.setCollaborator(collaborator);
+        }
+
+        return repository.save(collaborator);
     }
 
 
@@ -91,5 +95,10 @@ public class CollaboratorService {
 
     public Collaborator findCollaboratorById(Integer id) {
         return repository.findCollaboratorById(id);
+    }
+
+    public List<Collaborator> listCollaboratorsWithFilter(CollaboratorFilter collaboratorFilter) {
+        log.info(collaboratorFilter.toString());
+        return repository.findAllWithFilter(collaboratorFilter);
     }
 }

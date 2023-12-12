@@ -1,6 +1,7 @@
 package com.procrianca.demo.rest.controller;
 
 import com.procrianca.demo.domain.entity.Beneficiary;
+import com.procrianca.demo.domain.jpafilters.CollaboratorFilter;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
 import jakarta.validation.constraints.NotNull;
@@ -92,5 +93,16 @@ public class CollaboratorController {
         log.info("Calling endpoint to list all collaboratorss in controller: " + log.getName());
         List<Collaborator> collaborators = this.collaboratorService.listAllCollaborators();
         return ResponseEntity.status(HttpStatus.OK).body(collaborators);
+    }
+
+    @Operation(summary = "Retrieve all collaborators in filter")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Listed Collaborators in filter", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Collaborator.class))),
+    })
+    @PostMapping("/collaborators/filter")
+    public ResponseEntity<List<Collaborator>> getCollaboratorsFilter(@RequestBody CollaboratorFilter collaboratorFilter) {
+        log.info("Calling endpoint to list all collaborators in controller using a filter");
+        List<Collaborator> collaboratorList = collaboratorService.listCollaboratorsWithFilter(collaboratorFilter);
+        return ResponseEntity.ok(collaboratorList);
     }
 }
