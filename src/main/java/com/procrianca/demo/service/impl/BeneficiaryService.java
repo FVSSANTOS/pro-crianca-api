@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Service
@@ -116,5 +117,12 @@ public class BeneficiaryService {
 
         return repository.findAllWithFilter(beneficiaryFilter);
 
+    }
+
+    public Beneficiary findById(Integer id) {
+        var optionalBeneficiary = repository.findById(id);
+        if(optionalBeneficiary.isEmpty())
+            throw new NoSuchElementException("ERROR: beneficiary not found");
+        return optionalBeneficiary.get();
     }
 }

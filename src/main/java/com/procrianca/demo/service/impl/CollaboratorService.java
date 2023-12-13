@@ -12,8 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 @Slf4j
 @Service
@@ -100,5 +100,14 @@ public class CollaboratorService {
     public List<Collaborator> listCollaboratorsWithFilter(CollaboratorFilter collaboratorFilter) {
         log.info(collaboratorFilter.toString());
         return repository.findAllWithFilter(collaboratorFilter);
+    }
+
+    public Collaborator findById(Integer id) {
+        var optionalCollaborator = repository.findById(id);
+
+        if(optionalCollaborator.isEmpty())
+            throw new NoSuchElementException("ERROR: Collaborator not found");
+
+        return optionalCollaborator.get();
     }
 }

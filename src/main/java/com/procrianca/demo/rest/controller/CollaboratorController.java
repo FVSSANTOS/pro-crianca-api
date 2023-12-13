@@ -105,4 +105,22 @@ public class CollaboratorController {
         List<Collaborator> collaboratorList = collaboratorService.listCollaboratorsWithFilter(collaboratorFilter);
         return ResponseEntity.ok(collaboratorList);
     }
+
+    @Operation(summary = "Get collaborator by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Collaborator found"),
+            @ApiResponse(responseCode = "404", description = "Collaborator not found")
+    })
+    @GetMapping("/collaborators/{id}")
+    public ResponseEntity<Collaborator> getCollaboratorById(@PathVariable(value = "id") @NotNull @Positive Integer id) {
+        log.info("Calling endpoint to find one collaborator in controller: " + log.getName());
+        try {
+            var collaborator = this.collaboratorService.findById(id);
+
+            return ResponseEntity.ok(collaborator);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+    }
 }
