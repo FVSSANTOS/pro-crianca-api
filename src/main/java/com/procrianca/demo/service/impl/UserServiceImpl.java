@@ -1,6 +1,7 @@
 package com.procrianca.demo.service.impl;
 
 import com.procrianca.demo.domain.dtos.UserRecordDto;
+import com.procrianca.demo.domain.entity.Collaborator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,11 +9,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.repository.UserRepository;
-
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,10 @@ public class UserServiceImpl implements UserDetailsService {
     private UserRepository repository;
     @Autowired
     private PasswordEncoder encoder;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CollaboratorService collaboratorService;
     @Transactional
     public User saveUser(User user){
         var userExists = this.repository.findByLogin(user.getLogin());
@@ -85,5 +89,27 @@ public class UserServiceImpl implements UserDetailsService {
     public User findUserByLogin(String login) {
         return repository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException("usuário não encontrado na base de dados!"));
     }
-    
+
+    @Transactional()
+    public User insertUserColaborator(User user) {
+        var userExists = this.repository.findByLogin(user.getLogin());
+
+        if(userExists.isPresent())
+            throw new IllegalArgumentException("ERROR: User already exists");
+
+        String passwordEncode = passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordEncode);
+
+        Collaborator collaborator = user.getCollaborator();
+        Collaborator collaboratorInserted = collaboratorService.saveCollaborator(collaborator);
+
+        if(collaboratorInserted == null)
+            throw new IllegalArgumentException("ERROR: Invalid colaborator");
+
+        user.setCollaborator(collaborator);
+
+        UserRecordDto userRecordDto = new UserRecordDto(user.getLogin(), user.getPassword(), user.getId());
+        BeanUtils.copyProperties(user, userRecordDto);
+        return repository.save(user);
+    }
 }

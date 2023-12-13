@@ -102,8 +102,13 @@ public class CollaboratorController {
     @PostMapping("/collaborators/filter")
     public ResponseEntity<List<Collaborator>> getCollaboratorsFilter(@RequestBody CollaboratorFilter collaboratorFilter) {
         log.info("Calling endpoint to list all collaborators in controller using a filter");
-        List<Collaborator> collaboratorList = collaboratorService.listCollaboratorsWithFilter(collaboratorFilter);
-        return ResponseEntity.ok(collaboratorList);
+        try {
+            List<Collaborator> collaboratorList = collaboratorService.listCollaboratorsWithFilter(collaboratorFilter);
+            return ResponseEntity.ok(collaboratorList);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @Operation(summary = "Get collaborator by ID")

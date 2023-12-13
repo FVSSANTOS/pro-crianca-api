@@ -47,5 +47,8 @@ public class BeneficiaryEducational {
     private String previousSchool;
 
     @Column
+    private String previousSchoolPhone;
+
+    @Column
     private String observations;
 }
