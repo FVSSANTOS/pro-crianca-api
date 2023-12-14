@@ -4,7 +4,6 @@ package com.procrianca.demo.rest.controller;
 import com.procrianca.demo.domain.dtos.AuthoritiesDTO;
 import com.procrianca.demo.domain.dtos.CredentialsDTO;
 import com.procrianca.demo.domain.dtos.TokenDTO;
-import com.procrianca.demo.domain.dtos.UserRecordDto;
 import com.procrianca.demo.domain.response.AuthResponse;
 import com.procrianca.demo.domain.response.HttpStatusCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -129,6 +129,25 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
+    @Operation(summary = "Delete user by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Delete user"),
+            @ApiResponse(responseCode = "404", description = "Cannot find user")
+    })
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable(value = "id") @NotNull @Positive Integer id) {
+        log.info("Calling endpoint to delete user in controller: " + log.getName());
+
+        try {
+            User userDeleted = userService.deleteUser(id);
+            return ResponseEntity.ok(userDeleted);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 
 
     private boolean correctPassword(String senhaDigitada, String senhaArmazenada) {
