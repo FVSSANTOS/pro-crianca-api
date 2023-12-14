@@ -128,4 +128,13 @@ public class UserServiceImpl implements UserDetailsService {
         userDeleted.setCollaborator(null);
         return userDeleted;
     }
+
+    public User findUserByCollaboratorId(Integer id) {
+        var userByCollaboratorId = repository.findUserByCollaboratorId(id);
+
+        if (userByCollaboratorId.isEmpty())
+            throw new NoSuchElementException("ERROR: Cannot find user with collaborator id");
+
+        return userByCollaboratorId.get();
+    }
 }

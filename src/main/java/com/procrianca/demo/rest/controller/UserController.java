@@ -148,6 +148,26 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Find user by collaborator id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @GetMapping("/userscollaborator/{id}")
+    public ResponseEntity<User> getUserByCollaboratorId(@PathVariable(value = "id") @NotNull @Positive Integer id) {
+        log.info("Calling endpoint to delete user in controller: " + log.getName());
+
+        try {
+            User userDeleted = userService.findUserByCollaboratorId(id);
+            return ResponseEntity.ok(userDeleted);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
+
 
 
     private boolean correctPassword(String senhaDigitada, String senhaArmazenada) {
