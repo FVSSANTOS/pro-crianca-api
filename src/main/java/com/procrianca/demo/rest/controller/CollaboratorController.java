@@ -102,7 +102,30 @@ public class CollaboratorController {
     @PostMapping("/collaborators/filter")
     public ResponseEntity<List<Collaborator>> getCollaboratorsFilter(@RequestBody CollaboratorFilter collaboratorFilter) {
         log.info("Calling endpoint to list all collaborators in controller using a filter");
-        List<Collaborator> collaboratorList = collaboratorService.listCollaboratorsWithFilter(collaboratorFilter);
-        return ResponseEntity.ok(collaboratorList);
+        try {
+            List<Collaborator> collaboratorList = collaboratorService.listCollaboratorsWithFilter(collaboratorFilter);
+            return ResponseEntity.ok(collaboratorList);
+        }catch (Exception e){
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @Operation(summary = "Get collaborator by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Collaborator found"),
+            @ApiResponse(responseCode = "404", description = "Collaborator not found")
+    })
+    @GetMapping("/collaborators/{id}")
+    public ResponseEntity<Collaborator> getCollaboratorById(@PathVariable(value = "id") @NotNull @Positive Integer id) {
+        log.info("Calling endpoint to find one collaborator in controller: " + log.getName());
+        try {
+            var collaborator = this.collaboratorService.findById(id);
+
+            return ResponseEntity.ok(collaborator);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
     }
 }

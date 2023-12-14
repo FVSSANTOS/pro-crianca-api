@@ -1,5 +1,6 @@
 package com.procrianca.demo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.procrianca.demo.domain.enums.Gender;
 import com.procrianca.demo.domain.enums.Shift;
 import com.procrianca.demo.domain.enums.Status;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Date;
 import java.util.List;
@@ -90,6 +90,7 @@ public class Collaborator {
     private String observations;
 
     @OneToOne(mappedBy = "collaborator")
+    @JsonIgnore
     private User user;
 
     @ManyToOne

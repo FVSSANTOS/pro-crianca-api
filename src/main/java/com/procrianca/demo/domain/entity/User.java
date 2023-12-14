@@ -39,7 +39,7 @@ public class User {
     @Column(name = "admin")
     private int admin;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "colaboradores_id", referencedColumnName = "id")
     private Collaborator collaborator;
 

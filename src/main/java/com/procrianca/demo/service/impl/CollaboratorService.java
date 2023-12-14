@@ -3,7 +3,6 @@ package com.procrianca.demo.service.impl;
 import com.procrianca.demo.domain.entity.Beneficiary;
 import com.procrianca.demo.domain.entity.Collaborator;
 import com.procrianca.demo.domain.entity.Unit;
-import com.procrianca.demo.domain.entity.User;
 import com.procrianca.demo.domain.jpafilters.CollaboratorFilter;
 import com.procrianca.demo.domain.repository.CollaboratorRepository;
 import jakarta.transaction.Transactional;
@@ -12,9 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 @Slf4j
 @Service
 public class CollaboratorService {
@@ -43,15 +41,12 @@ public class CollaboratorService {
 
         Unit unit = unitService.findUnitById(unitId);
 
-        Integer userId = collaborator.getUser().getId();
-        Optional<User> userOptional = userService.findUserById(userId);
 
-        if (unit == null || userOptional.isEmpty() || collaboratorExists != null) {
+        if (unit == null || collaboratorExists != null) {
             return null;
         }
 
         collaborator.setUnit(unit);
-        collaborator.setUser(userOptional.get());
 
         for (Beneficiary beneficiary : collaborator.getBeneficiarios()) {
             beneficiary.setCollaborator(collaborator);
@@ -100,5 +95,14 @@ public class CollaboratorService {
     public List<Collaborator> listCollaboratorsWithFilter(CollaboratorFilter collaboratorFilter) {
         log.info(collaboratorFilter.toString());
         return repository.findAllWithFilter(collaboratorFilter);
+    }
+
+    public Collaborator findById(Integer id) {
+        var optionalCollaborator = repository.findById(id);
+
+        if(optionalCollaborator.isEmpty())
+            throw new NoSuchElementException("ERROR: Collaborator not found");
+
+        return optionalCollaborator.get();
     }
 }

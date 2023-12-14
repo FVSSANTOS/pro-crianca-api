@@ -152,5 +152,23 @@ public class BeneficiaryController {
         return ResponseEntity.ok(beneficiaryList);
     }
 
+    @Operation(summary = "Get beneficiary by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Beneficiary found"),
+            @ApiResponse(responseCode = "404", description = "Beneficiary not found")
+    })
+    @GetMapping("/beneficiaries/{id}")
+    public ResponseEntity<Beneficiary> getBeneficiaryById(@PathVariable(value = "id") @NotNull @Positive Integer id) {
+        log.info("Calling endpoint to find one beneficiary in controller: " + log.getName());
+        try {
+            var beneficiary = this.beneficiaryService.findById(id);
+
+            return ResponseEntity.ok(beneficiary);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+    }
+
 
 }
